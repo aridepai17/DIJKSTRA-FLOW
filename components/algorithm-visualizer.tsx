@@ -172,7 +172,7 @@ export function AlgorithmVisualizer({
 									disabled={
 										currentStep >= maxSteps || isPlaying
 									}
-									className="h-9 w-9 sm:h-10 sm:w-10 touch-manipulation flex-shrink-0 bg-transparent"
+									className="h-9 w-9 sm:h-10 sm:w-10 touch-manipulation shrink-0 bg-transparent"
 									title="Step Forward"
 								>
 									<SkipForward className="h-4 w-4" />
@@ -186,7 +186,7 @@ export function AlgorithmVisualizer({
 										size="icon"
 										onClick={handleReset}
 										disabled={isPlaying}
-										className="h-10 w-10 sm:h-11 sm:w-11 touch-manipulation flex-shrink-0 bg-transparent"
+										className="h-10 w-10 sm:h-11 sm:w-11 touch-manipulation shrink-0 bg-transparent"
 									>
 										<RotateCcw className="h-4 w-4 sm:h-5 sm:w-5" />
 									</Button>
@@ -209,7 +209,7 @@ export function AlgorithmVisualizer({
 								</div>
 
 								<div className="flex-1 flex items-center gap-3 sm:gap-4 min-w-0">
-									<span className="text-xs sm:text-sm font-medium whitespace-nowrap flex-shrink-0">
+									<span className="text-xs sm:text-sm font-medium whitespace-nowrap shrink-0">
 										Speed:
 									</span>
 									<Slider
@@ -222,7 +222,7 @@ export function AlgorithmVisualizer({
 										step={1}
 										className="flex-1 touch-manipulation"
 									/>
-									<span className="text-xs sm:text-sm font-medium text-muted-foreground w-8 sm:w-10 text-right flex-shrink-0">
+									<span className="text-xs sm:text-sm font-medium text-muted-foreground w-8 sm:w-10 text-right shrink-0">
 										{speed}
 									</span>
 								</div>
