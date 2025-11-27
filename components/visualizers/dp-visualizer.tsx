@@ -56,7 +56,7 @@ export function DPVisualizer({
 	useEffect(() => {
 		initRef.current = false;
 
-		if (algorithm === "0/1 Knapsack") {
+		if (algorithm.includes("Knapsack")) {
 			const numItems = 3 + Math.floor(Math.random() * 3); // 3-5 items
 			const randomCapacity = 8 + Math.floor(Math.random() * 8); // 8-15 capacity
 			const randomItems: KnapsackItem[] = [];
