@@ -39,6 +39,7 @@ export function AlgorithmVisualizer({
 	const [key, setKey] = useState(0);
 	const [speed, setSpeed] = useState(50);
 	const [currentStep, setCurrentStep] = useState(0);
+    const [maxSteps, setMaxSteps] = useState(0);
 	const [customData, setCustomData] = useState<number[] | null>(null);
 
 	const handleReset = () => {
