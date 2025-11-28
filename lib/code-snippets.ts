@@ -2,564 +2,2023 @@ export const codeSnippets: Record<
 	string,
 	{ javascript: string; python: string; java: string }
 > = {
+	// ==========================================
+	// SORTING ALGORITHMS
+	// ==========================================
 	"Bubble Sort": {
-		javascript: `function bubbleSort(arr) {
+		javascript: `/**
+ * Bubble Sort Implementation
+ * repeatedly steps through the list, compares adjacent elements and swaps them if they are in the wrong order.
+ *
+ * Time Complexity: O(n^2)
+ * Space Complexity: O(1)
+ */
+function bubbleSort(arr) {
     const n = arr.length;
+    let swapped;
     
     for (let i = 0; i < n - 1; i++) {
-      let swapped = false;
-      
-      for (let j = 0; j < n - i - 1; j++) {
-        if (arr[j] > arr[j + 1]) {
-          // Swap elements
-          [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
-          swapped = true;
+        swapped = false;
+        // Last i elements are already in place
+        for (let j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                // Swap elements
+                let temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+                swapped = true;
+            }
         }
-      }
-      
-      // If no swaps, array is sorted
-      if (!swapped) break;
+        // If no two elements were swapped by inner loop, then break
+        if (!swapped) break;
     }
-    
     return arr;
-  }
-  
-  // Time Complexity: O(n²)
-  // Space Complexity: O(1)`,
+}`,
 		python: `def bubble_sort(arr):
-      n = len(arr)
-      
-      for i in range(n - 1):
-          swapped = False
-          
-          for j in range(n - i - 1):
-              if arr[j] > arr[j + 1]:
-                  # Swap elements
-                  arr[j], arr[j + 1] = arr[j + 1], arr[j]
-                  swapped = True
-          
-          # If no swaps, array is sorted
-          if not swapped:
-              break
-      
-      return arr
-  
-  # Time Complexity: O(n²)
-  # Space Complexity: O(1)`,
-		java: `public static void bubbleSort(int[] arr) {
-      int n = arr.length;
-      
-      for (int i = 0; i < n - 1; i++) {
-          boolean swapped = false;
-          
-          for (int j = 0; j < n - i - 1; j++) {
-              if (arr[j] > arr[j + 1]) {
-                  // Swap elements
-                  int temp = arr[j];
-                  arr[j] = arr[j + 1];
-                  arr[j + 1] = temp;
-                  swapped = true;
-              }
-          }
-          
-          // If no swaps, array is sorted
-          if (!swapped) break;
-      }
-  }
-  
-  // Time Complexity: O(n²)
-  // Space Complexity: O(1)`,
-	},
-	"Selection Sort": {
-		javascript: `function selectionSort(arr) {
-    const n = arr.length;
+    """
+    Bubble Sort Implementation
+    Time Complexity: O(n^2)
+    Space Complexity: O(1)
+    """
+    n = len(arr)
     
-    for (let i = 0; i < n - 1; i++) {
-      // Find minimum element in unsorted portion
-      let minIdx = i;
-      
-      for (let j = i + 1; j < n; j++) {
-        if (arr[j] < arr[minIdx]) {
-          minIdx = j;
+    # Traverse through all array elements
+    for i in range(n):
+        swapped = False
+        
+        # Last i elements are already in place
+        for j in range(0, n - i - 1):
+            
+            # Traverse the array from 0 to n-i-1
+            # Swap if the element found is greater than the next element
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                swapped = True
+        
+        # If no two elements were swapped by inner loop, then break
+        if not swapped:
+            break
+            
+    return arr`,
+		java: `public class BubbleSort {
+    /**
+     * Bubble Sort Implementation
+     * Time Complexity: O(n^2)
+     * Space Complexity: O(1)
+     */
+    public static void bubbleSort(int[] arr) {
+        int n = arr.length;
+        boolean swapped;
+        
+        for (int i = 0; i < n - 1; i++) {
+            swapped = false;
+            for (int j = 0; j < n - i - 1; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    // Swap arr[j] and arr[j+1]
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                    swapped = true;
+                }
+            }
+            // If no two elements were swapped by inner loop, then break
+            if (!swapped) break;
         }
-      }
-      
-      // Swap minimum with first unsorted element
-      if (minIdx !== i) {
-        [arr[i], arr[minIdx]] = [arr[minIdx], arr[i]];
-      }
     }
-    
-    return arr;
-  }
-  
-  // Time Complexity: O(n²)
-  // Space Complexity: O(1)`,
-		python: `def selection_sort(arr):
-      n = len(arr)
-      
-      for i in range(n - 1):
-          # Find minimum element in unsorted portion
-          min_idx = i
-          
-          for j in range(i + 1, n):
-              if arr[j] < arr[min_idx]:
-                  min_idx = j
-          
-          # Swap minimum with first unsorted element
-          if min_idx != i:
-              arr[i], arr[min_idx] = arr[min_idx], arr[i]
-      
-      return arr
-  
-  # Time Complexity: O(n²)
-  # Space Complexity: O(1)`,
-		java: `public static void selectionSort(int[] arr) {
-      int n = arr.length;
-      
-      for (int i = 0; i < n - 1; i++) {
-          // Find minimum element in unsorted portion
-          int minIdx = i;
-          
-          for (int j = i + 1; j < n; j++) {
-              if (arr[j] < arr[minIdx]) {
-                  minIdx = j;
-              }
-          }
-          
-          // Swap minimum with first unsorted element
-          if (minIdx != i) {
-              int temp = arr[i];
-              arr[i] = arr[minIdx];
-              arr[minIdx] = temp;
-          }
-      }
-  }
-  
-  // Time Complexity: O(n²)
-  // Space Complexity: O(1)`,
+}`,
 	},
+
+	"Selection Sort": {
+		javascript: `/**
+ * Selection Sort Implementation
+ * repeatedly finds the minimum element (considering ascending order) from unsorted part and puts it at the beginning.
+ *
+ * Time Complexity: O(n^2)
+ * Space Complexity: O(1)
+ */
+function selectionSort(arr) {
+    const n = arr.length;
+
+    for (let i = 0; i < n - 1; i++) {
+        // Find the minimum element in unsorted array
+        let minIdx = i;
+        for (let j = i + 1; j < n; j++) {
+            if (arr[j] < arr[minIdx]) {
+                minIdx = j;
+            }
+        }
+
+        // Swap the found minimum element with the first element
+        if (minIdx !== i) {
+            let temp = arr[minIdx];
+            arr[minIdx] = arr[i];
+            arr[i] = temp;
+        }
+    }
+    return arr;
+}`,
+		python: `def selection_sort(arr):
+    """
+    Selection Sort Implementation
+    Time Complexity: O(n^2)
+    Space Complexity: O(1)
+    """
+    n = len(arr)
+    
+    # Traverse through all array elements
+    for i in range(n):
+        # Find the minimum element in remaining unsorted array
+        min_idx = i
+        for j in range(i + 1, n):
+            if arr[j] < arr[min_idx]:
+                min_idx = j
+                
+        # Swap the found minimum element with the first element
+        arr[i], arr[min_idx] = arr[min_idx], arr[i]
+        
+    return arr`,
+		java: `public class SelectionSort {
+    /**
+     * Selection Sort Implementation
+     * Time Complexity: O(n^2)
+     * Space Complexity: O(1)
+     */
+    public static void selectionSort(int[] arr) {
+        int n = arr.length;
+  
+        // One by one move boundary of unsorted subarray
+        for (int i = 0; i < n - 1; i++) {
+            // Find the minimum element in unsorted array
+            int minIdx = i;
+            for (int j = i + 1; j < n; j++) {
+                if (arr[j] < arr[minIdx]) {
+                    minIdx = j;
+                }
+            }
+  
+            // Swap the found minimum element with the first element
+            int temp = arr[minIdx];
+            arr[minIdx] = arr[i];
+            arr[i] = temp;
+        }
+    }
+}`,
+	},
+
 	"Insertion Sort": {
-		javascript: `function insertionSort(arr) {
+		javascript: `/**
+ * Insertion Sort Implementation
+ * Values from the unsorted part are picked and placed at the correct position in the sorted part.
+ *
+ * Time Complexity: O(n^2)
+ * Space Complexity: O(1)
+ */
+function insertionSort(arr) {
     const n = arr.length;
     
     for (let i = 1; i < n; i++) {
-      const key = arr[i];
-      let j = i - 1;
-      
-      // Move elements greater than key one position ahead
-      while (j >= 0 && arr[j] > key) {
-        arr[j + 1] = arr[j];
-        j--;
-      }
-      
-      arr[j + 1] = key;
+        let key = arr[i];
+        let j = i - 1;
+
+        // Move elements of arr[0..i-1], that are greater than key,
+        // to one position ahead of their current position
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+        }
+        arr[j + 1] = key;
     }
-    
     return arr;
-  }
-  
-  // Time Complexity: O(n²)
-  // Space Complexity: O(1)`,
+}`,
 		python: `def insertion_sort(arr):
-      n = len(arr)
-      
-      for i in range(1, n):
-          key = arr[i]
-          j = i - 1
-          
-          # Move elements greater than key one position ahead
-          while j >= 0 and arr[j] > key:
-              arr[j + 1] = arr[j]
-              j -= 1
-          
-          arr[j + 1] = key
-      
-      return arr
+    """
+    Insertion Sort Implementation
+    Time Complexity: O(n^2)
+    Space Complexity: O(1)
+    """
+    # Traverse through 1 to len(arr)
+    for i in range(1, len(arr)):
+        key = arr[i]
+        
+        # Move elements of arr[0..i-1], that are greater than key,
+        # to one position ahead of their current position
+        j = i - 1
+        while j >= 0 and key < arr[j]:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+        
+    return arr`,
+		java: `public class InsertionSort {
+    /**
+     * Insertion Sort Implementation
+     * Time Complexity: O(n^2)
+     * Space Complexity: O(1)
+     */
+    public static void insertionSort(int[] arr) {
+        int n = arr.length;
+        for (int i = 1; i < n; ++i) {
+            int key = arr[i];
+            int j = i - 1;
   
-  # Time Complexity: O(n²)
-  # Space Complexity: O(1)`,
-		java: `public static void insertionSort(int[] arr) {
-      int n = arr.length;
-      
-      for (int i = 1; i < n; i++) {
-          int key = arr[i];
-          int j = i - 1;
-          
-          // Move elements greater than key one position ahead
-          while (j >= 0 && arr[j] > key) {
-              arr[j + 1] = arr[j];
-              j--;
-          }
-          
-          arr[j + 1] = key;
-      }
-  }
-  
-  // Time Complexity: O(n²)
-  // Space Complexity: O(1)`,
+            /* Move elements of arr[0..i-1], that are greater than key,
+               to one position ahead of their current position */
+            while (j >= 0 && arr[j] > key) {
+                arr[j + 1] = arr[j];
+                j = j - 1;
+            }
+            arr[j + 1] = key;
+        }
+    }
+}`,
 	},
+
 	"Merge Sort": {
-		javascript: `function mergeSort(arr) {
-    if (arr.length <= 1) return arr;
-    
+		javascript: `/**
+ * Merge Sort Implementation
+ * Divide and Conquer algorithm that divides the input array into two halves, calls itself for the two halves, and then merges the two sorted halves.
+ *
+ * Time Complexity: O(n log n)
+ * Space Complexity: O(n)
+ */
+function mergeSort(arr) {
+    if (arr.length <= 1) {
+        return arr;
+    }
+
     const mid = Math.floor(arr.length / 2);
     const left = mergeSort(arr.slice(0, mid));
     const right = mergeSort(arr.slice(mid));
-    
+
     return merge(left, right);
-  }
-  
-  function merge(left, right) {
-    const result = [];
-    let i = 0, j = 0;
-    
-    while (i < left.length && j < right.length) {
-      if (left[i] <= right[j]) {
-        result.push(left[i++]);
-      } else {
-        result.push(right[j++]);
-      }
+}
+
+function merge(left, right) {
+    let resultArray = [], leftIndex = 0, rightIndex = 0;
+
+    // Concatenate values into the resultArray in order
+    while (leftIndex < left.length && rightIndex < right.length) {
+        if (left[leftIndex] < right[rightIndex]) {
+            resultArray.push(left[leftIndex]);
+            leftIndex++;
+        } else {
+            resultArray.push(right[rightIndex]);
+            rightIndex++;
+        }
     }
-    
-    return result.concat(left.slice(i)).concat(right.slice(j));
-  }
-  
-  // Time Complexity: O(n log n)
-  // Space Complexity: O(n)`,
+
+    // We need to concat to the element remaining parts
+    return resultArray
+            .concat(left.slice(leftIndex))
+            .concat(right.slice(rightIndex));
+}`,
 		python: `def merge_sort(arr):
-      if len(arr) <= 1:
-          return arr
-      
-      mid = len(arr) // 2
-      left = merge_sort(arr[:mid])
-      right = merge_sort(arr[mid:])
-      
-      return merge(left, right)
-  
-  def merge(left, right):
-      result = []
-      i = j = 0
-      
-      while i < len(left) and j < len(right):
-          if left[i] <= right[j]:
-              result.append(left[i])
-              i += 1
-          else:
-              result.append(right[j])
-              j += 1
-      
-      result.extend(left[i:])
-      result.extend(right[j:])
-      return result
-  
-  # Time Complexity: O(n log n)
-  # Space Complexity: O(n)`,
-		java: `public static void mergeSort(int[] arr, int left, int right) {
-      if (left < right) {
-          int mid = left + (right - left) / 2;
-          
-          mergeSort(arr, left, mid);
-          mergeSort(arr, mid + 1, right);
-          merge(arr, left, mid, right);
-      }
-  }
-  
-  public static void merge(int[] arr, int left, int mid, int right) {
-      int n1 = mid - left + 1;
-      int n2 = right - mid;
-      
-      int[] L = new int[n1];
-      int[] R = new int[n2];
-      
-      for (int i = 0; i < n1; i++)
-          L[i] = arr[left + i];
-      for (int j = 0; j < n2; j++)
-          R[j] = arr[mid + 1 + j];
-      
-      int i = 0, j = 0, k = left;
-      
-      while (i < n1 && j < n2) {
-          if (L[i] <= R[j]) {
-              arr[k++] = L[i++];
-          } else {
-              arr[k++] = R[j++];
-          }
-      }
-      
-      while (i < n1) arr[k++] = L[i++];
-      while (j < n2) arr[k++] = R[j++];
-  }
-  
-  // Time Complexity: O(n log n)
-  // Space Complexity: O(n)`,
+    """
+    Merge Sort Implementation
+    Time Complexity: O(n log n)
+    Space Complexity: O(n)
+    """
+    if len(arr) > 1:
+        mid = len(arr) // 2
+        L = arr[:mid]
+        R = arr[mid:]
+
+        # Recursive calls
+        merge_sort(L)
+        merge_sort(R)
+
+        i = j = k = 0
+
+        # Copy data to temp arrays L[] and R[]
+        while i < len(L) and j < len(R):
+            if L[i] <= R[j]:
+                arr[k] = L[i]
+                i += 1
+            else:
+                arr[k] = R[j]
+                j += 1
+            k += 1
+
+        # Checking if any element was left
+        while i < len(L):
+            arr[k] = L[i]
+            i += 1
+            k += 1
+
+        while j < len(R):
+            arr[k] = R[j]
+            j += 1
+            k += 1
+            
+    return arr`,
+		java: `public class MergeSort {
+    /**
+     * Merge Sort Implementation
+     * Time Complexity: O(n log n)
+     * Space Complexity: O(n)
+     */
+    public static void mergeSort(int[] arr, int l, int r) {
+        if (l < r) {
+            // Find the middle point
+            int m = l + (r - l) / 2;
+
+            // Sort first and second halves
+            mergeSort(arr, l, m);
+            mergeSort(arr, m + 1, r);
+
+            // Merge the sorted halves
+            merge(arr, l, m, r);
+        }
+    }
+
+    public static void merge(int[] arr, int l, int m, int r) {
+        // Find sizes of two subarrays to be merged
+        int n1 = m - l + 1;
+        int n2 = r - m;
+
+        /* Create temp arrays */
+        int[] L = new int[n1];
+        int[] R = new int[n2];
+
+        /*Copy data to temp arrays*/
+        for (int i = 0; i < n1; ++i)
+            L[i] = arr[l + i];
+        for (int j = 0; j < n2; ++j)
+            R[j] = arr[m + 1 + j];
+
+        /* Merge the temp arrays */
+        int i = 0, j = 0;
+        int k = l;
+        while (i < n1 && j < n2) {
+            if (L[i] <= R[j]) {
+                arr[k] = L[i];
+                i++;
+            } else {
+                arr[k] = R[j];
+                j++;
+            }
+            k++;
+        }
+
+        /* Copy remaining elements of L[] if any */
+        while (i < n1) {
+            arr[k] = L[i];
+            i++;
+            k++;
+        }
+
+        /* Copy remaining elements of R[] if any */
+        while (j < n2) {
+            arr[k] = R[j];
+            j++;
+            k++;
+        }
+    }
+}`,
 	},
+
 	"Quick Sort": {
-		javascript: `function quickSort(arr, low = 0, high = arr.length - 1) {
+		javascript: `/**
+ * Quick Sort Implementation
+ * Divide and Conquer algorithm. It picks an element as a pivot and partitions the given array around the picked pivot.
+ *
+ * Time Complexity: O(n log n)
+ * Space Complexity: O(log n)
+ */
+function quickSort(arr, low = 0, high = arr.length - 1) {
     if (low < high) {
-      const pivotIdx = partition(arr, low, high);
-      quickSort(arr, low, pivotIdx - 1);
-      quickSort(arr, pivotIdx + 1, high);
+        // pi is partitioning index, arr[pi] is now at right place
+        let pi = partition(arr, low, high);
+
+        quickSort(arr, low, pi - 1);  // Before pi
+        quickSort(arr, pi + 1, high); // After pi
     }
     return arr;
-  }
-  
-  function partition(arr, low, high) {
-    const pivot = arr[high];
-    let i = low - 1;
-    
-    for (let j = low; j < high; j++) {
-      if (arr[j] < pivot) {
-        i++;
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
+}
+
+function partition(arr, low, high) {
+    // Pivot (Element to be placed at right position)
+    let pivot = arr[high];  
+    let i = (low - 1);  // Index of smaller element
+
+    for (let j = low; j <= high - 1; j++) {
+        // If current element is smaller than the pivot
+        if (arr[j] < pivot) {
+            i++;    // increment index of smaller element
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
     }
-    
     [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
-    return i + 1;
-  }
-  
-  // Time Complexity: O(n log n) average, O(n²) worst
-  // Space Complexity: O(log n)`,
-		python: `def quick_sort(arr, low=0, high=None):
-      if high is None:
-          high = len(arr) - 1
-      
-      if low < high:
-          pivot_idx = partition(arr, low, high)
-          quick_sort(arr, low, pivot_idx - 1)
-          quick_sort(arr, pivot_idx + 1, high)
-      
-      return arr
-  
-  def partition(arr, low, high):
-      pivot = arr[high]
-      i = low - 1
-      
-      for j in range(low, high):
-          if arr[j] < pivot:
-              i += 1
-              arr[i], arr[j] = arr[j], arr[i]
-      
-      arr[i + 1], arr[high] = arr[high], arr[i + 1]
-      return i + 1
-  
-  # Time Complexity: O(n log n) average, O(n²) worst
-  # Space Complexity: O(log n)`,
-		java: `public static void quickSort(int[] arr, int low, int high) {
-      if (low < high) {
-          int pivotIdx = partition(arr, low, high);
-          quickSort(arr, low, pivotIdx - 1);
-          quickSort(arr, pivotIdx + 1, high);
-      }
-  }
-  
-  public static int partition(int[] arr, int low, int high) {
-      int pivot = arr[high];
-      int i = low - 1;
-      
-      for (int j = low; j < high; j++) {
-          if (arr[j] < pivot) {
-              i++;
-              int temp = arr[i];
-              arr[i] = arr[j];
-              arr[j] = temp;
-          }
-      }
-      
-      int temp = arr[i + 1];
-      arr[i + 1] = arr[high];
-      arr[high] = temp;
-      
-      return i + 1;
-  }
-  
-  // Time Complexity: O(n log n) average, O(n²) worst
-  // Space Complexity: O(log n)`,
-	},
-	"Heap Sort": {
-		javascript: `function heapSort(arr) {
-    const n = arr.length;
+    return (i + 1);
+}`,
+		python: `def quick_sort(arr, low, high):
+    """
+    Quick Sort Implementation
+    Time Complexity: O(n log n)
+    Space Complexity: O(log n)
+    """
+    if len(arr) == 1:
+        return arr
     
-    // Build max heap
-    for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
-      heapify(arr, n, i);
-    }
-    
-    // Extract elements from heap one by one
-    for (let i = n - 1; i > 0; i--) {
-      [arr[0], arr[i]] = [arr[i], arr[0]];
-      heapify(arr, i, 0);
-    }
-    
-    return arr;
-  }
-  
-  function heapify(arr, n, i) {
-    let largest = i;
-    const left = 2 * i + 1;
-    const right = 2 * i + 2;
-    
-    if (left < n && arr[left] > arr[largest]) {
-      largest = left;
-    }
-    
-    if (right < n && arr[right] > arr[largest]) {
-      largest = right;
-    }
-    
-    if (largest !== i) {
-      [arr[i], arr[largest]] = [arr[largest], arr[i]];
-      heapify(arr, n, largest);
-    }
-  }
-  
-  // Time Complexity: O(n log n)
-  // Space Complexity: O(1)`,
-		python: `def heap_sort(arr):
-      n = len(arr)
-      
-      # Build max heap
-      for i in range(n // 2 - 1, -1, -1):
-          heapify(arr, n, i)
-      
-      # Extract elements from heap one by one
-      for i in range(n - 1, 0, -1):
-          arr[0], arr[i] = arr[i], arr[0]
-          heapify(arr, i, 0)
-      
-      return arr
-  
-  def heapify(arr, n, i):
-      largest = i
-      left = 2 * i + 1
-      right = 2 * i + 2
-      
-      if left < n and arr[left] > arr[largest]:
-          largest = left
-      
-      if right < n and arr[right] > arr[largest]:
-          largest = right
-      
-      if largest != i:
-          arr[i], arr[largest] = arr[largest], arr[i]
-          heapify(arr, n, largest)
-  
-  # Time Complexity: O(n log n)
-  # Space Complexity: O(1)`,
-		java: `public static void heapSort(int[] arr) {
-      int n = arr.length;
-      
-      // Build max heap
-      for (int i = n / 2 - 1; i >= 0; i--) {
-          heapify(arr, n, i);
-      }
-      
-      // Extract elements from heap one by one
-      for (int i = n - 1; i > 0; i--) {
-          int temp = arr[0];
-          arr[0] = arr[i];
-          arr[i] = temp;
-          
-          heapify(arr, i, 0);
-      }
-  }
-  
-  public static void heapify(int[] arr, int n, int i) {
-      int largest = i;
-      int left = 2 * i + 1;
-      int right = 2 * i + 2;
-      
-      if (left < n && arr[left] > arr[largest]) {
-          largest = left;
-      }
-      
-      if (right < n && arr[right] > arr[largest]) {
-          largest = right;
-      }
-      
-      if (largest != i) {
-          int temp = arr[i];
-          arr[i] = arr[largest];
-          arr[largest] = temp;
-          
-          heapify(arr, n, largest);
-      }
-  }
-  
-  // Time Complexity: O(n log n)
-  // Space Complexity: O(1)`,
-	},
-	"Shell Sort": {
-		javascript: `function shellSort(arr) {
-    const n = arr.length;
-    
-    // Start with a large gap, then reduce
-    for (let gap = Math.floor(n / 2); gap > 0; gap = Math.floor(gap / 2)) {
-      // Do a gapped insertion sort
-      for (let i = gap; i < n; i++) {
-        const temp = arr[i];
-        let j = i;
+    if low < high:
+        # pi is partitioning index, arr[p] is now at right place
+        pi = partition(arr, low, high)
+
+        # Separately sort elements before partition and after partition
+        quick_sort(arr, low, pi - 1)
+        quick_sort(arr, pi + 1, high)
         
-        while (j >= gap && arr[j - gap] > temp) {
-          arr[j] = arr[j - gap];
-          j -= gap;
+    return arr
+
+def partition(arr, low, high):
+    i = (low - 1)         # index of smaller element
+    pivot = arr[high]     # pivot
+
+    for j in range(low, high):
+        # If current element is smaller than or equal to pivot
+        if arr[j] <= pivot:
+            i = i + 1
+            arr[i], arr[j] = arr[j], arr[i]
+
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    return (i + 1)`,
+		java: `public class QuickSort {
+    /**
+     * Quick Sort Implementation
+     * Time Complexity: O(n log n)
+     * Space Complexity: O(log n)
+     */
+    public static void quickSort(int[] arr, int low, int high) {
+        if (low < high) {
+            // pi is partitioning index, arr[pi] is now at right place
+            int pi = partition(arr, low, high);
+
+            // Recursively sort elements before partition and after partition
+            quickSort(arr, low, pi - 1);
+            quickSort(arr, pi + 1, high);
+        }
+    }
+
+    public static int partition(int[] arr, int low, int high) {
+        int pivot = arr[high];
+        int i = (low - 1); // index of smaller element
+        for (int j = low; j < high; j++) {
+            // If current element is smaller than the pivot
+            if (arr[j] < pivot) {
+                i++;
+
+                // swap arr[i] and arr[j]
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+
+        // swap arr[i+1] and arr[high] (or pivot)
+        int temp = arr[i + 1];
+        arr[i + 1] = arr[high];
+        arr[high] = temp;
+
+        return i + 1;
+    }
+}`,
+	},
+
+	"Heap Sort": {
+		javascript: `/**
+ * Heap Sort Implementation
+ * Comparison-based sorting algorithm based on a Binary Heap data structure.
+ *
+ * Time Complexity: O(n log n)
+ * Space Complexity: O(1)
+ */
+function heapSort(arr) {
+    let n = arr.length;
+
+    // Build heap (rearrange array)
+    for (let i = Math.floor(n / 2) - 1; i >= 0; i--)
+        heapify(arr, n, i);
+
+    // One by one extract an element from heap
+    for (let i = n - 1; i > 0; i--) {
+        // Move current root to end
+        let temp = arr[0];
+        arr[0] = arr[i];
+        arr[i] = temp;
+
+        // call max heapify on the reduced heap
+        heapify(arr, i, 0);
+    }
+    return arr;
+}
+
+function heapify(arr, n, i) {
+    let largest = i;   // Initialize largest as root
+    let l = 2 * i + 1; // left = 2*i + 1
+    let r = 2 * i + 2; // right = 2*i + 2
+
+    // If left child is larger than root
+    if (l < n && arr[l] > arr[largest])
+        largest = l;
+
+    // If right child is larger than largest so far
+    if (r < n && arr[r] > arr[largest])
+        largest = r;
+
+    // If largest is not root
+    if (largest != i) {
+        let swap = arr[i];
+        arr[i] = arr[largest];
+        arr[largest] = swap;
+
+        // Recursively heapify the affected sub-tree
+        heapify(arr, n, largest);
+    }
+}`,
+		python: `def heap_sort(arr):
+    """
+    Heap Sort Implementation
+    Time Complexity: O(n log n)
+    Space Complexity: O(1)
+    """
+    n = len(arr)
+
+    # Build a maxheap.
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(arr, n, i)
+
+    # One by one extract elements
+    for i in range(n - 1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]  # swap
+        heapify(arr, i, 0)
+    
+    return arr
+
+def heapify(arr, n, i):
+    largest = i  # Initialize largest as root
+    l = 2 * i + 1     # left = 2*i + 1
+    r = 2 * i + 2     # right = 2*i + 2
+
+    # See if left child of root exists and is greater than root
+    if l < n and arr[l] > arr[largest]:
+        largest = l
+
+    # See if right child of root exists and is greater than root
+    if r < n and arr[r] > arr[largest]:
+        largest = r
+
+    # Change root, if needed
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]  # swap
+
+        # Heapify the root.
+        heapify(arr, n, largest)`,
+		java: `public class HeapSort {
+    /**
+     * Heap Sort Implementation
+     * Time Complexity: O(n log n)
+     * Space Complexity: O(1)
+     */
+    public static void heapSort(int[] arr) {
+        int n = arr.length;
+
+        // Build heap (rearrange array)
+        for (int i = n / 2 - 1; i >= 0; i--)
+            heapify(arr, n, i);
+
+        // One by one extract an element from heap
+        for (int i = n - 1; i > 0; i--) {
+            // Move current root to end
+            int temp = arr[0];
+            arr[0] = arr[i];
+            arr[i] = temp;
+
+            // call max heapify on the reduced heap
+            heapify(arr, i, 0);
+        }
+    }
+
+    // To heapify a subtree rooted with node i which is an index in arr[]. n is size of heap
+    static void heapify(int[] arr, int n, int i) {
+        int largest = i; // Initialize largest as root
+        int l = 2 * i + 1; // left = 2*i + 1
+        int r = 2 * i + 2; // right = 2*i + 2
+
+        // If left child is larger than root
+        if (l < n && arr[l] > arr[largest])
+            largest = l;
+
+        // If right child is larger than largest so far
+        if (r < n && arr[r] > arr[largest])
+            largest = r;
+
+        // If largest is not root
+        if (largest != i) {
+            int swap = arr[i];
+            arr[i] = arr[largest];
+            arr[largest] = swap;
+
+            // Recursively heapify the affected sub-tree
+            heapify(arr, n, largest);
+        }
+    }
+}`,
+	},
+
+	// ==========================================
+	// SEARCHING ALGORITHMS
+	// ==========================================
+	"Linear Search": {
+		javascript: `/**
+ * Linear Search Implementation
+ * Sequentially checks each element of the list until a match is found.
+ *
+ * Time Complexity: O(n)
+ * Space Complexity: O(1)
+ */
+function linearSearch(arr, target) {
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === target) {
+            return i; // Return index if found
+        }
+    }
+    return -1; // Return -1 if not found
+}`,
+		python: `def linear_search(arr, target):
+    """
+    Linear Search Implementation
+    Time Complexity: O(n)
+    Space Complexity: O(1)
+    """
+    for i in range(len(arr)):
+        if arr[i] == target:
+            return i
+    return -1`,
+		java: `public class LinearSearch {
+    /**
+     * Linear Search Implementation
+     * Time Complexity: O(n)
+     * Space Complexity: O(1)
+     */
+    public static int linearSearch(int[] arr, int target) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == target) {
+                return i;
+            }
+        }
+        return -1;
+    }
+}`,
+	},
+
+	"Binary Search": {
+		javascript: `/**
+ * Binary Search Implementation
+ * Search a sorted array by repeatedly dividing the search interval in half.
+ *
+ * Time Complexity: O(log n)
+ * Space Complexity: O(1)
+ */
+function binarySearch(arr, target) {
+    let left = 0;
+    let right = arr.length - 1;
+
+    while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+
+        if (arr[mid] === target) {
+            return mid;
+        } else if (arr[mid] < target) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+    return -1;
+}`,
+		python: `def binary_search(arr, target):
+    """
+    Binary Search Implementation
+    Time Complexity: O(log n)
+    Space Complexity: O(1)
+    """
+    left = 0
+    right = len(arr) - 1
+    
+    while left <= right:
+        mid = (left + right) // 2
+        
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+            
+    return -1`,
+		java: `public class BinarySearch {
+    /**
+     * Binary Search Implementation
+     * Time Complexity: O(log n)
+     * Space Complexity: O(1)
+     */
+    public static int binarySearch(int[] arr, int target) {
+        int left = 0;
+        int right = arr.length - 1;
+        
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            
+            if (arr[mid] == target) {
+                return mid;
+            }
+            if (arr[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return -1;
+    }
+}`,
+	},
+
+	"Jump Search": {
+		javascript: `/**
+ * Jump Search Implementation
+ * Jumping ahead by fixed steps or skipping some elements in place of searching all elements.
+ *
+ * Time Complexity: O(√n)
+ * Space Complexity: O(1)
+ */
+function jumpSearch(arr, target) {
+    const n = arr.length;
+    // Finding the block size to be jumped
+    let step = Math.floor(Math.sqrt(n));
+    let prev = 0;
+    
+    // Finding the block where element is present (if it is present)
+    while (arr[Math.min(step, n) - 1] < target) {
+        prev = step;
+        step += Math.floor(Math.sqrt(n));
+        if (prev >= n) {
+            return -1;
+        }
+    }
+    
+    // Doing a linear search for target in block beginning with prev
+    while (arr[prev] < target) {
+        prev++;
+        if (prev === Math.min(step, n)) {
+            return -1;
+        }
+    }
+    
+    // If element is found
+    if (arr[prev] === target) {
+        return prev;
+    }
+    return -1;
+}`,
+		python: `import math
+
+def jump_search(arr, target):
+    """
+    Jump Search Implementation
+    Time Complexity: O(√n)
+    Space Complexity: O(1)
+    """
+    n = len(arr)
+    step = math.sqrt(n)
+    prev = 0
+    
+    while arr[int(min(step, n) - 1)] < target:
+        prev = step
+        step += math.sqrt(n)
+        if prev >= n:
+            return -1
+            
+    while arr[int(prev)] < target:
+        prev += 1
+        if prev == min(step, n):
+            return -1
+            
+    if arr[int(prev)] == target:
+        return int(prev)
+        
+    return -1`,
+		java: `public class JumpSearch {
+    /**
+     * Jump Search Implementation
+     * Time Complexity: O(√n)
+     * Space Complexity: O(1)
+     */
+    public static int jumpSearch(int[] arr, int target) {
+        int n = arr.length;
+        int step = (int) Math.floor(Math.sqrt(n));
+        int prev = 0;
+        
+        while (arr[Math.min(step, n) - 1] < target) {
+            prev = step;
+            step += (int) Math.floor(Math.sqrt(n));
+            if (prev >= n) {
+                return -1;
+            }
         }
         
-        arr[j] = temp;
-      }
+        while (arr[prev] < target) {
+            prev++;
+            if (prev == Math.min(step, n)) {
+                return -1;
+            }
+        }
+        
+        if (arr[prev] == target) {
+            return prev;
+        }
+        return -1;
+    }
+}`,
+	},
+
+	// ==========================================
+	// DYNAMIC PROGRAMMING
+	// ==========================================
+	"0/1 Knapsack Problem": {
+		javascript: `/**
+ * 0/1 Knapsack Problem Implementation (Bottom-Up DP)
+ * Returns the maximum value that can be put in a knapsack of capacity W.
+ *
+ * Time Complexity: O(n * W)
+ * Space Complexity: O(n * W)
+ */
+function knapsack(weights, values, capacity) {
+    const n = weights.length;
+    const dp = Array.from({ length: n + 1 }, () => Array(capacity + 1).fill(0));
+
+    for (let i = 1; i <= n; i++) {
+        for (let w = 0; w <= capacity; w++) {
+            if (weights[i - 1] <= w) {
+                // Max of (including the item, excluding the item)
+                dp[i][w] = Math.max(
+                    values[i - 1] + dp[i - 1][w - weights[i - 1]],
+                    dp[i - 1][w]
+                );
+            } else {
+                // Can't include the item, take value from previous row
+                dp[i][w] = dp[i - 1][w];
+            }
+        }
+    }
+    return dp[n][capacity];
+}`,
+		python: `def knapsack(weights, values, capacity):
+    """
+    0/1 Knapsack Problem (Bottom-Up DP)
+    Time Complexity: O(n * W)
+    Space Complexity: O(n * W)
+    """
+    n = len(weights)
+    dp = [[0 for x in range(capacity + 1)] for x in range(n + 1)]
+    
+    for i in range(1, n + 1):
+        for w in range(capacity + 1):
+            if weights[i-1] <= w:
+                # Max of (including current item, excluding current item)
+                dp[i][w] = max(
+                    values[i-1] + dp[i-1][w-weights[i-1]], 
+                    dp[i-1][w]
+                )
+            else:
+                dp[i][w] = dp[i-1][w]
+                
+    return dp[n][capacity]`,
+		java: `public class Knapsack {
+    /**
+     * 0/1 Knapsack Problem (Bottom-Up DP)
+     * Time Complexity: O(n * W)
+     * Space Complexity: O(n * W)
+     */
+    public static int knapsack(int[] weights, int[] values, int capacity) {
+        int n = weights.length;
+        int[][] dp = new int[n + 1][capacity + 1];
+
+        for (int i = 1; i <= n; i++) {
+            for (int w = 0; w <= capacity; w++) {
+                if (weights[i - 1] <= w) {
+                    dp[i][w] = Math.max(
+                        values[i - 1] + dp[i - 1][w - weights[i - 1]],
+                        dp[i - 1][w]
+                    );
+                } else {
+                    dp[i][w] = dp[i - 1][w];
+                }
+            }
+        }
+        return dp[n][capacity];
+    }
+}`,
+	},
+
+	"Fibonacci Sequence": {
+		javascript: `/**
+ * Fibonacci Sequence Implementation (Memoization/Tabulation)
+ *
+ * Time Complexity: O(n)
+ * Space Complexity: O(n)
+ */
+function fibonacci(n) {
+    if (n <= 1) return n;
+    
+    const dp = new Array(n + 1).fill(0);
+    dp[0] = 0;
+    dp[1] = 1;
+    
+    for (let i = 2; i <= n; i++) {
+        dp[i] = dp[i - 1] + dp[i - 2];
     }
     
-    return arr;
-  }
-  
-  // Time Complexity: O(n log² n)
-  // Space Complexity: O(1)`,
-		python: `def shell_sort(arr):
-      n = len(arr)
-      gap = n // 2
-      
-      # Start with a large gap, then reduce
-      while gap > 0:
-          # Do a gapped insertion sort
-          for i in range(gap, n):
-              temp = arr[i]
-              j = i
-              
-              while j >= gap and arr[j - gap] > temp:
-                  arr[j] = arr[j - gap]
-                  j -= gap
-              
-              arr[j] = temp
-          
-          gap //= 2
-      
-      return arr
-  
-  # Time Complexity: O(n log² n)
-  # Space Complexity: O(1)`,
-		java: `public static void shellSort(int[] arr) {
-      int n = arr.length;
-      
-      // Start with a large gap, then reduce
-      for (int gap = n / 2; gap > 0; gap /= 2) {
-          // Do a gapped insertion sort
-          for (int i = gap; i < n; i++) {
-              int temp = arr[i];
-              int j = i;
-              
-              while (j >= gap && arr[j - gap] > temp) {
-                  arr[j] = arr[j - gap];
-                  j -= gap;
-              }
-              
-              arr[j] = temp;
-          }
-      }
-  }
-  
-  // Time Complexity: O(n log² n)
-  // Space Complexity: O(1)`,
+    return dp[n];
+}
+
+// Space Optimized Version (O(1) Space)
+function fibonacciOptimized(n) {
+    if (n <= 1) return n;
+    let a = 0, b = 1, c;
+    for(let i = 2; i <= n; i++) {
+        c = a + b;
+        a = b;
+        b = c;
+    }
+    return b;
+}`,
+		python: `def fibonacci(n):
+    """
+    Fibonacci Sequence (Tabulation)
+    Time Complexity: O(n)
+    Space Complexity: O(n)
+    """
+    if n <= 1: return n
+    
+    dp = [0] * (n + 1)
+    dp[1] = 1
+    
+    for i in range(2, n + 1):
+        dp[i] = dp[i-1] + dp[i-2]
+        
+    return dp[n]
+
+def fibonacci_optimized(n):
+    # Space Optimized Version
+    if n <= 1: return n
+    a, b = 0, 1
+    for _ in range(2, n + 1):
+        a, b = b, a + b
+    return b`,
+		java: `public class Fibonacci {
+    /**
+     * Fibonacci Sequence (Tabulation)
+     * Time Complexity: O(n)
+     * Space Complexity: O(n)
+     */
+    public static int fibonacci(int n) {
+        if (n <= 1) return n;
+        int[] dp = new int[n + 1];
+        dp[1] = 1;
+        
+        for (int i = 2; i <= n; i++) {
+            dp[i] = dp[i - 1] + dp[i - 2];
+        }
+        return dp[n];
+    }
+
+    // Space Optimized Version
+    public static int fibonacciOptimized(int n) {
+        if (n <= 1) return n;
+        int a = 0, b = 1, c;
+        for (int i = 2; i <= n; i++) {
+            c = a + b;
+            a = b;
+            b = c;
+        }
+        return b;
+    }
+}`,
+	},
+
+	// ==========================================
+	// BACKTRACKING
+	// ==========================================
+	"N-Queens Problem": {
+		javascript: `/**
+ * N-Queens Problem Implementation
+ * Places N queens on an NxN chessboard so that no two queens attack each other.
+ *
+ * Time Complexity: O(N!)
+ * Space Complexity: O(N^2)
+ */
+function solveNQueens(n) {
+    const board = Array.from({ length: n }, () => Array(n).fill('.'));
+    const solutions = [];
+
+    function isSafe(row, col) {
+        // Check left side of row
+        for (let i = 0; i < col; i++) {
+            if (board[row][i] === 'Q') return false;
+        }
+        // Check upper diagonal on left side
+        for (let i = row, j = col; i >= 0 && j >= 0; i--, j--) {
+            if (board[i][j] === 'Q') return false;
+        }
+        // Check lower diagonal on left side
+        for (let i = row, j = col; i < n && j >= 0; i++, j--) {
+            if (board[i][j] === 'Q') return false;
+        }
+        return true;
+    }
+
+    function solve(col) {
+        if (col >= n) {
+            // Found a solution, add to list
+            solutions.push(board.map(row => row.join('')));
+            return;
+        }
+
+        for (let row = 0; row < n; row++) {
+            if (isSafe(row, col)) {
+                board[row][col] = 'Q'; // Place queen
+                solve(col + 1);        // Recurse
+                board[row][col] = '.'; // Backtrack
+            }
+        }
+    }
+
+    solve(0);
+    return solutions;
+}`,
+		python: `def solve_n_queens(n):
+    """
+    N-Queens Problem Implementation
+    Time Complexity: O(N!)
+    Space Complexity: O(N^2)
+    """
+    board = [['.' for x in range(n)] for y in range(n)]
+    solutions = []
+
+    def is_safe(row, col):
+        # Check this row on left side
+        for i in range(col):
+            if board[row][i] == 'Q':
+                return False
+        
+        # Check upper diagonal on left side
+        for i, j in zip(range(row, -1, -1), range(col, -1, -1)):
+            if board[i][j] == 'Q':
+                return False
+                
+        # Check lower diagonal on left side
+        for i, j in zip(range(row, n, 1), range(col, -1, -1)):
+            if board[i][j] == 'Q':
+                return False
+        
+        return True
+
+    def solve(col):
+        if col >= n:
+            solutions.append(["".join(row) for row in board])
+            return
+
+        for i in range(n):
+            if is_safe(i, col):
+                board[i][col] = 'Q'
+                solve(col + 1)
+                board[i][col] = '.' # Backtrack
+
+    solve(0)
+    return solutions`,
+		java: `import java.util.*;
+
+public class NQueens {
+    /**
+     * N-Queens Problem Implementation
+     * Time Complexity: O(N!)
+     * Space Complexity: O(N^2)
+     */
+    public List<List<String>> solveNQueens(int n) {
+        char[][] board = new char[n][n];
+        for(int i = 0; i < n; i++)
+            for(int j = 0; j < n; j++)
+                board[i][j] = '.';
+        
+        List<List<String>> res = new ArrayList<>();
+        dfs(0, board, res);
+        return res;
+    }
+    
+    private void dfs(int col, char[][] board, List<List<String>> res) {
+        if(col == board.length) {
+            res.add(construct(board));
+            return;
+        }
+        
+        for(int row = 0; row < board.length; row++) {
+            if(validate(board, row, col)) {
+                board[row][col] = 'Q';
+                dfs(col + 1, board, res);
+                board[row][col] = '.';
+            }
+        }
+    }
+    
+    private boolean validate(char[][] board, int row, int col) {
+        int dupRow = row;
+        int dupCol = col;
+        while(row >= 0 && col >= 0) {
+            if(board[row][col] == 'Q') return false;
+            row--; col--;
+        }
+        row = dupRow; col = dupCol;
+        while(col >= 0) {
+            if(board[row][col] == 'Q') return false;
+            col--;
+        }
+        row = dupRow; col = dupCol;
+        while(col >= 0 && row < board.length) {
+            if(board[row][col] == 'Q') return false;
+            col--; row++;
+        }
+        return true;
+    }
+    
+    private List<String> construct(char[][] board) {
+        List<String> res = new ArrayList<>();
+        for(int i = 0; i < board.length; i++) {
+            res.add(new String(board[i]));
+        }
+        return res;
+    }
+}`,
+	},
+
+	"Sudoku Solver": {
+		javascript: `/**
+ * Sudoku Solver Implementation
+ * Solves a 9x9 Sudoku board using Backtracking.
+ *
+ * Time Complexity: O(9^m) where m is blank cells
+ * Space Complexity: O(n^2)
+ */
+function solveSudoku(board) {
+    function isValid(row, col, num) {
+        for (let i = 0; i < 9; i++) {
+            // Check Row
+            if (board[row][i] === num) return false;
+            // Check Column
+            if (board[i][col] === num) return false;
+            // Check 3x3 Box
+            if (board[3 * Math.floor(row / 3) + Math.floor(i / 3)]
+                     [3 * Math.floor(col / 3) + i % 3] === num)
+                return false;
+        }
+        return true;
+    }
+
+    function solve() {
+        for (let i = 0; i < board.length; i++) {
+            for (let j = 0; j < board[0].length; j++) {
+                if (board[i][j] === 0) { // Found empty cell
+                    for (let c = 1; c <= 9; c++) {
+                        if (isValid(i, j, c)) {
+                            board[i][j] = c;
+                            
+                            if (solve()) return true;
+                            else board[i][j] = 0; // Backtrack
+                        }
+                    }
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    solve();
+    return board;
+}`,
+		python: `def solve_sudoku(board):
+    """
+    Sudoku Solver Implementation
+    Time Complexity: O(9^m)
+    Space Complexity: O(n^2)
+    """
+    solve(board)
+    
+def solve(board):
+    for i in range(len(board)):
+        for j in range(len(board[0])):
+            if board[i][j] == 0:
+                for c in range(1, 10): # Try numbers 1-9
+                    if is_valid(board, i, j, c):
+                        board[i][j] = c
+                        
+                        if solve(board):
+                            return True
+                        else:
+                            board[i][j] = 0 # Backtrack
+                return False
+    return True
+
+def is_valid(board, row, col, c):
+    for i in range(9):
+        if board[i][col] == c: return False
+        if board[row][i] == c: return False
+        if board[3 * (row // 3) + i // 3][3 * (col // 3) + i % 3] == c: 
+            return False
+    return True`,
+		java: `public class SudokuSolver {
+    /**
+     * Sudoku Solver Implementation
+     * Time Complexity: O(9^m)
+     * Space Complexity: O(n^2)
+     */
+    public void solveSudoku(char[][] board) {
+        solve(board);
+    }
+    
+    public boolean solve(char[][] board){
+        for(int i=0; i<board.length; i++){
+            for(int j=0; j<board[0].length; j++){
+                if(board[i][j] == '.'){
+                    for(char c = '1'; c <= '9'; c++){
+                        if(isValid(board, i, j, c)){
+                            board[i][j] = c;
+                            
+                            if(solve(board)) return true;
+                            else board[i][j] = '.';
+                        }
+                    }
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
+    public boolean isValid(char[][] board, int row, int col, char c){
+        for(int i=0; i<9; i++){
+            if(board[i][col] != '.' && board[i][col] == c) return false;
+            if(board[row][i] != '.' && board[row][i] == c) return false;
+            
+            if(board[3 * (row / 3) + i / 3][3 * (col / 3) + i % 3] != '.' && 
+               board[3 * (row / 3) + i / 3][3 * (col / 3) + i % 3] == c) return false;
+        }
+        return true;
+    }
+}`,
+	},
+
+	// ==========================================
+	// GRAPH ALGORITHMS
+	// ==========================================
+	"Depth First Search (DFS)": {
+		javascript: `/**
+ * Depth First Search (DFS) Implementation
+ * Recursive approach to traverse a graph.
+ *
+ * Time Complexity: O(V + E)
+ * Space Complexity: O(V)
+ */
+function dfs(graph, startNode, visited = new Set()) {
+    visited.add(startNode);
+    console.log(startNode); // Process node
+
+    const neighbors = graph[startNode];
+    for (const neighbor of neighbors) {
+        if (!visited.has(neighbor)) {
+            dfs(graph, neighbor, visited);
+        }
+    }
+}`,
+		python: `def dfs(graph, start, visited=None):
+    """
+    Depth First Search (DFS) Implementation
+    Time Complexity: O(V + E)
+    Space Complexity: O(V)
+    """
+    if visited is None:
+        visited = set()
+    
+    visited.add(start)
+    print(start) # Process node
+
+    for next_node in graph[start] - visited:
+        dfs(graph, next_node, visited)
+    return visited`,
+		java: `import java.util.*;
+
+public class DFS {
+    /**
+     * Depth First Search (DFS) Implementation
+     * Time Complexity: O(V + E)
+     * Space Complexity: O(V)
+     */
+    public void dfs(int start, boolean[] visited, ArrayList<ArrayList<Integer>> adj) {
+        visited[start] = true;
+        System.out.print(start + " "); // Process node
+
+        for (Integer neighbor : adj.get(start)) {
+            if (!visited[neighbor]) {
+                dfs(neighbor, visited, adj);
+            }
+        }
+    }
+}`,
+	},
+
+	"Breadth First Search (BFS)": {
+		javascript: `/**
+ * Breadth First Search (BFS) Implementation
+ * Queue-based approach to traverse a graph level by level.
+ *
+ * Time Complexity: O(V + E)
+ * Space Complexity: O(V)
+ */
+function bfs(graph, startNode) {
+    const visited = new Set();
+    const queue = [startNode];
+    
+    visited.add(startNode);
+
+    while (queue.length > 0) {
+        const currentNode = queue.shift(); // Dequeue
+        console.log(currentNode); // Process node
+
+        const neighbors = graph[currentNode];
+        for (const neighbor of neighbors) {
+            if (!visited.has(neighbor)) {
+                visited.add(neighbor);
+                queue.push(neighbor);
+            }
+        }
+    }
+}`,
+		python: `from collections import deque
+
+def bfs(graph, start):
+    """
+    Breadth First Search (BFS) Implementation
+    Time Complexity: O(V + E)
+    Space Complexity: O(V)
+    """
+    visited = set()
+    queue = deque([start])
+    visited.add(start)
+
+    while queue:
+        vertex = queue.popleft()
+        print(vertex) # Process node
+
+        for neighbor in graph[vertex]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append(neighbor)`,
+		java: `import java.util.*;
+
+public class BFS {
+    /**
+     * Breadth First Search (BFS) Implementation
+     * Time Complexity: O(V + E)
+     * Space Complexity: O(V)
+     */
+    public void bfs(int start, int V, ArrayList<ArrayList<Integer>> adj) {
+        boolean[] visited = new boolean[V];
+        LinkedList<Integer> queue = new LinkedList<Integer>();
+
+        visited[start] = true;
+        queue.add(start);
+
+        while (queue.size() != 0) {
+            start = queue.poll();
+            System.out.print(start + " "); // Process node
+
+            Iterator<Integer> i = adj.get(start).listIterator();
+            while (i.hasNext()) {
+                int n = i.next();
+                if (!visited[n]) {
+                    visited[n] = true;
+                    queue.add(n);
+                }
+            }
+        }
+    }
+}`,
+	},
+
+	"Dijkstra's Algorithm": {
+		javascript: `/**
+ * Dijkstra's Algorithm
+ * Finds the shortest path from a start node to all other nodes in a weighted graph.
+ *
+ * Time Complexity: O((V + E) log V) using Priority Queue
+ * Space Complexity: O(V)
+ */
+function dijkstra(graph, startNode) {
+    let distances = {};
+    let pq = new PriorityQueue(); // Assume PriorityQueue class exists
+
+    // Initialize distances
+    for (let node in graph) {
+        distances[node] = Infinity;
+    }
+    distances[startNode] = 0;
+    pq.enqueue(startNode, 0);
+
+    while (!pq.isEmpty()) {
+        let { element: currentNode, priority: currentDist } = pq.dequeue();
+
+        // If found shorter path to neighbor, update it
+        for (let neighbor in graph[currentNode]) {
+            let weight = graph[currentNode][neighbor];
+            let distance = currentDist + weight;
+
+            if (distance < distances[neighbor]) {
+                distances[neighbor] = distance;
+                pq.enqueue(neighbor, distance);
+            }
+        }
+    }
+    return distances;
+}`,
+		python: `import heapq
+
+def dijkstra(graph, start):
+    """
+    Dijkstra's Algorithm
+    Time Complexity: O((V + E) log V)
+    Space Complexity: O(V)
+    """
+    # Priority queue to store (distance, vertex)
+    pq = [(0, start)]
+    distances = {vertex: float('infinity') for vertex in graph}
+    distances[start] = 0
+
+    while pq:
+        current_dist, current_vertex = heapq.heappop(pq)
+
+        # Nodes can get added to the priority queue multiple times
+        if current_dist > distances[current_vertex]:
+            continue
+
+        for neighbor, weight in graph[current_vertex].items():
+            distance = current_dist + weight
+
+            # Only consider this new path if it's better
+            if distance < distances[neighbor]:
+                distances[neighbor] = distance
+                heapq.heappush(pq, (distance, neighbor))
+
+    return distances`,
+		java: `import java.util.*;
+
+public class Dijkstra {
+    /**
+     * Dijkstra's Algorithm
+     * Time Complexity: O((V + E) log V)
+     * Space Complexity: O(V)
+     */
+    public int[] dijkstra(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj, int S) {
+        // Min-heap to store {distance, node}
+        PriorityQueue<int[]> pq = new PriorityQueue<>((x, y) -> x[0] - y[0]);
+        int[] dist = new int[V];
+        
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[S] = 0;
+        pq.add(new int[]{0, S});
+        
+        while(pq.size() > 0) {
+            int[] current = pq.poll();
+            int dis = current[0];
+            int node = current[1];
+            
+            for(int i = 0; i < adj.get(node).size(); i++) {
+                int edgeWeight = adj.get(node).get(i).get(1);
+                int adjNode = adj.get(node).get(i).get(0);
+                
+                if(dis + edgeWeight < dist[adjNode]) {
+                    dist[adjNode] = dis + edgeWeight;
+                    pq.add(new int[]{dist[adjNode], adjNode});
+                }
+            }
+        }
+        return dist;
+    }
+}`,
+	},
+
+	"A* Search": {
+		javascript: `/**
+ * A* Search Algorithm
+ * Informed search algorithm that uses a heuristic function to guide search.
+ * f(n) = g(n) + h(n)
+ */
+function aStar(start, goal, h) {
+    // The set of discovered nodes that may need to be (re-)expanded.
+    let openSet = [start];
+    
+    // For node n, cameFrom[n] is the node immediately preceding it on the cheapest path
+    let cameFrom = {};
+
+    // gScore[n] is the cost of the cheapest path from start to n
+    let gScore = {};
+    gScore[start] = 0;
+
+    // fScore[n] := gScore[n] + h(n)
+    let fScore = {};
+    fScore[start] = h(start);
+
+    while (openSet.length > 0) {
+        // Node in openSet having the lowest fScore[] value
+        let current = openSet.reduce((a, b) => fScore[a] < fScore[b] ? a : b);
+        
+        if (current === goal)
+            return reconstruct_path(cameFrom, current);
+
+        openSet = openSet.filter(item => item !== current);
+
+        // For each neighbor of current
+        for (let neighbor of getNeighbors(current)) {
+            let tentative_gScore = gScore[current] + d(current, neighbor);
+            
+            if (tentative_gScore < (gScore[neighbor] || Infinity)) {
+                cameFrom[neighbor] = current;
+                gScore[neighbor] = tentative_gScore;
+                fScore[neighbor] = gScore[neighbor] + h(neighbor);
+                
+                if (!openSet.includes(neighbor)) {
+                    openSet.push(neighbor);
+                }
+            }
+        }
+    }
+    return false; // Failure
+}`,
+		python: `import heapq
+
+def a_star(start, goal, h):
+    """
+    A* Search Algorithm
+    Uses a min-heap for the open set.
+    """
+    open_set = []
+    heapq.heappush(open_set, (0, start))
+    
+    came_from = {}
+    g_score = {start: 0}
+    f_score = {start: h(start)}
+    
+    while open_set:
+        current = heapq.heappop(open_set)[1]
+        
+        if current == goal:
+            return reconstruct_path(came_from, current)
+            
+        for neighbor in get_neighbors(current):
+            tentative_g_score = g_score[current] + d(current, neighbor)
+            
+            if tentative_g_score < g_score.get(neighbor, float('inf')):
+                came_from[neighbor] = current
+                g_score[neighbor] = tentative_g_score
+                f_score[neighbor] = g_score[neighbor] + h(neighbor)
+                heapq.heappush(open_set, (f_score[neighbor], neighbor))
+                
+    return False`,
+		java: `import java.util.*;
+
+public class AStar {
+    // Assuming Node class with f, g, h scores exists
+    public List<Node> findPath(Node start, Node goal) {
+        PriorityQueue<Node> openSet = new PriorityQueue<>(Comparator.comparingDouble(n -> n.f));
+        Set<Node> closedSet = new HashSet<>();
+        
+        start.g = 0;
+        start.f = start.g + heuristic(start, goal);
+        openSet.add(start);
+        
+        while(!openSet.isEmpty()) {
+            Node current = openSet.poll();
+            
+            if(current.equals(goal)) {
+                return reconstructPath(current);
+            }
+            
+            closedSet.add(current);
+            
+            for(Edge edge : current.neighbors) {
+                Node neighbor = edge.target;
+                if(closedSet.contains(neighbor)) continue;
+                
+                double tentativeG = current.g + edge.weight;
+                
+                if(tentativeG < neighbor.g) {
+                    neighbor.parent = current;
+                    neighbor.g = tentativeG;
+                    neighbor.f = neighbor.g + heuristic(neighbor, goal);
+                    
+                    if(!openSet.contains(neighbor)) {
+                        openSet.add(neighbor);
+                    }
+                }
+            }
+        }
+        return null; // No path found
+    }
+}`,
+	},
+
+	// ==========================================
+	// MST ALGORITHMS
+	// ==========================================
+	"Prim's Algorithm": {
+		javascript: `/**
+ * Prim's Algorithm Implementation
+ * Finds the Minimum Spanning Tree (MST) of a weighted undirected graph.
+ *
+ * Time Complexity: O(E log V)
+ */
+function primMST(graph) {
+    const parent = []; // Array to store constructed MST
+    const key = [];    // Key values used to pick minimum weight edge
+    const mstSet = []; // To represent set of vertices included in MST
+    const V = graph.length;
+
+    // Initialize all keys as INFINITE
+    for (let i = 0; i < V; i++) {
+        key[i] = Infinity;
+        mstSet[i] = false;
+    }
+
+    // Always include first 1st vertex in MST.
+    key[0] = 0;
+    parent[0] = -1; // First node is always root of MST
+
+    for (let count = 0; count < V - 1; count++) {
+        // Pick the minimum key vertex from the set of vertices
+        // not yet included in MST
+        let u = minKey(key, mstSet, V);
+
+        // Add the picked vertex to the MST Set
+        mstSet[u] = true;
+
+        // Update key value and parent index of the adjacent vertices
+        for (let v = 0; v < V; v++) {
+            if (graph[u][v] && !mstSet[v] && graph[u][v] < key[v]) {
+                parent[v] = u;
+                key[v] = graph[u][v];
+            }
+        }
+    }
+    return parent;
+}`,
+		python: `import sys
+
+class Graph:
+    def __init__(self, vertices):
+        self.V = vertices
+        self.graph = [[0 for column in range(vertices)] for row in range(vertices)]
+
+    def printMST(self, parent):
+        for i in range(1, self.V):
+            print(parent[i], "-", i, "\t", self.graph[i][parent[i]])
+
+    def minKey(self, key, mstSet):
+        min_val = sys.maxsize
+        min_index = -1
+        for v in range(self.V):
+            if key[v] < min_val and not mstSet[v]:
+                min_val = key[v]
+                min_index = v
+        return min_index
+
+    def primMST(self):
+        """
+        Prim's MST Algorithm
+        Time Complexity: O(V^2) for adjacency matrix
+        """
+        key = [sys.maxsize] * self.V
+        parent = [None] * self.V
+        key[0] = 0
+        mstSet = [False] * self.V
+        parent[0] = -1
+
+        for cout in range(self.V):
+            u = self.minKey(key, mstSet)
+            mstSet[u] = True
+
+            for v in range(self.V):
+                if self.graph[u][v] > 0 and not mstSet[v] and key[v] > self.graph[u][v]:
+                    key[v] = self.graph[u][v]
+                    parent[v] = u
+
+        self.printMST(parent)`,
+		java: `import java.util.*;
+
+public class Prims {
+    /**
+     * Prim's MST Algorithm
+     * Time Complexity: O(E log V) using Priority Queue
+     */
+    public int spanningTree(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj) {
+        boolean[] vis = new boolean[V];
+        PriorityQueue<Pair> pq = new PriorityQueue<>((a, b) -> a.wt - b.wt);
+        
+        pq.add(new Pair(0, 0)); // {weight, node}
+        int sum = 0;
+        
+        while(pq.size() > 0) {
+            int wt = pq.peek().wt;
+            int node = pq.peek().node;
+            pq.remove();
+            
+            if(vis[node]) continue;
+            vis[node] = true;
+            sum += wt;
+            
+            for(int i = 0; i < adj.get(node).size(); i++) {
+                int adjNode = adj.get(node).get(i).get(0);
+                int edgeW = adj.get(node).get(i).get(1);
+                
+                if(!vis[adjNode]) {
+                    pq.add(new Pair(edgeW, adjNode));
+                }
+            }
+        }
+        return sum;
+    }
+    
+    class Pair {
+        int wt; int node;
+        public Pair(int distance, int node) {
+            this.wt = distance;
+            this.node = node;
+        }
+    }
+}`,
+	},
+
+	"Kruskal's Algorithm": {
+		javascript: `/**
+ * Kruskal's Algorithm Implementation
+ * Uses Union-Find data structure to detect cycles.
+ *
+ * Time Complexity: O(E log E) or O(E log V)
+ */
+class UnionFind {
+    constructor(n) {
+        this.parent = Array.from({length: n}, (_, i) => i);
+    }
+    
+    find(i) {
+        if (this.parent[i] == i)
+            return i;
+        return this.find(this.parent[i]);
+    }
+    
+    union(i, j) {
+        let rootI = this.find(i);
+        let rootJ = this.find(j);
+        if (rootI != rootJ) {
+            this.parent[rootI] = rootJ;
+            return true;
+        }
+        return false;
+    }
+}
+
+function kruskalMST(edges, V) {
+    // 1. Sort all edges in non-decreasing order of their weight
+    edges.sort((a, b) => a.weight - b.weight);
+
+    const uf = new UnionFind(V);
+    const result = [];
+    let e = 0; // Index of sorted edges
+    let i = 0; // Index of result array
+
+    // Number of edges to be taken is V-1
+    while (i < V - 1 && e < edges.length) {
+        const {src, dest, weight} = edges[e++];
+
+        let x = uf.find(src);
+        let y = uf.find(dest);
+
+        // If including this edge doesn't cause cycle
+        if (x !== y) {
+            result.push({src, dest, weight});
+            uf.union(x, y);
+            i++;
+        }
+    }
+    return result;
+}`,
+		python: `class Graph:
+    def __init__(self, vertices):
+        self.V = vertices
+        self.graph = []
+
+    def addEdge(self, u, v, w):
+        self.graph.append([u, v, w])
+
+    def find(self, parent, i):
+        if parent[i] == i:
+            return i
+        return self.find(parent, parent[i])
+
+    def union(self, parent, rank, x, y):
+        xroot = self.find(parent, x)
+        yroot = self.find(parent, y)
+
+        if rank[xroot] < rank[yroot]:
+            parent[xroot] = yroot
+        elif rank[xroot] > rank[yroot]:
+            parent[yroot] = xroot
+        else:
+            parent[yroot] = xroot
+            rank[xroot] += 1
+
+    def KruskalMST(self):
+        """
+        Kruskal's MST Algorithm
+        Time Complexity: O(E log E)
+        """
+        result = []
+        i = 0; e = 0
+        self.graph = sorted(self.graph, key=lambda item: item[2])
+        parent = []; rank = []
+
+        for node in range(self.V):
+            parent.append(node)
+            rank.append(0)
+
+        while e < self.V - 1:
+            u, v, w = self.graph[i]
+            i = i + 1
+            x = self.find(parent, u)
+            y = self.find(parent, v)
+
+            if x != y:
+                e = e + 1
+                result.append([u, v, w])
+                self.union(parent, rank, x, y)
+                
+        return result`,
+		java: `import java.util.*;
+
+class Edge implements Comparable<Edge> {
+    int src, dest, weight;
+    public int compareTo(Edge compareEdge) {
+        return this.weight - compareEdge.weight;
+    }
+}
+
+public class Kruskal {
+    /**
+     * Kruskal's MST Algorithm
+     * Time Complexity: O(E log E)
+     */
+    class Subset { int parent, rank; }
+
+    int find(Subset subsets[], int i) {
+        if (subsets[i].parent != i)
+            subsets[i].parent = find(subsets, subsets[i].parent);
+        return subsets[i].parent;
+    }
+
+    void Union(Subset subsets[], int x, int y) {
+        int xroot = find(subsets, x);
+        int yroot = find(subsets, y);
+
+        if (subsets[xroot].rank < subsets[yroot].rank)
+            subsets[xroot].parent = yroot;
+        else if (subsets[xroot].rank > subsets[yroot].rank)
+            subsets[yroot].parent = xroot;
+        else {
+            subsets[yroot].parent = xroot;
+            subsets[xroot].rank++;
+        }
+    }
+
+    void KruskalMST(Edge[] edges, int V, int E) {
+        Edge result[] = new Edge[V];
+        int e = 0;
+        int i = 0;
+        
+        Arrays.sort(edges);
+        Subset subsets[] = new Subset[V];
+        for (int v = 0; v < V; ++v) {
+            subsets[v] = new Subset();
+            subsets[v].parent = v;
+            subsets[v].rank = 0;
+        }
+
+        while (e < V - 1) {
+            Edge next_edge = edges[i++];
+            int x = find(subsets, next_edge.src);
+            int y = find(subsets, next_edge.dest);
+
+            if (x != y) {
+                result[e++] = next_edge;
+                Union(subsets, x, y);
+            }
+        }
+    }
+}`,
+	},
+
+	"Uniform Cost Search": {
+		javascript: `/**
+ * Uniform Cost Search (UCS)
+ * Explores graph by visiting node with lowest cumulative path cost.
+ * Equivalent to Dijkstra with no heuristic.
+ */
+function ucs(graph, start, goal) {
+    const pq = new PriorityQueue(); // Custom PriorityQueue
+    pq.enqueue(start, 0);
+    const visited = new Set();
+    
+    while (!pq.isEmpty()) {
+        const { element: node, priority: cost } = pq.dequeue();
+        
+        if (node === goal) return cost;
+        if (visited.has(node)) continue;
+        
+        visited.add(node);
+        
+        for (const neighbor of graph[node]) {
+            if (!visited.has(neighbor)) {
+                // cost + edge weight
+                const newCost = cost + getWeight(node, neighbor); 
+                pq.enqueue(neighbor, newCost);
+            }
+        }
+    }
+    return -1;
+}`,
+		python: `import heapq
+
+def ucs(graph, start, goal):
+    """
+    Uniform Cost Search
+    Time Complexity: O(E log V)
+    """
+    visited = set()
+    # Queue stores (cost, node)
+    queue = [(0, start)]
+    
+    while queue:
+        cost, node = heapq.heappop(queue)
+        
+        if node == goal:
+            return cost
+            
+        if node not in visited:
+            visited.add(node)
+            
+            for neighbor, weight in graph[node].items():
+                if neighbor not in visited:
+                    total_cost = cost + weight
+                    heapq.heappush(queue, (total_cost, neighbor))
+    return -1`,
+		java: `import java.util.*;
+
+public class UCS {
+    /**
+     * Uniform Cost Search
+     * Time Complexity: O(E log V)
+     */
+    public int solve(Map<Integer, List<int[]>> graph, int start, int goal) {
+        // PriorityQueue stores {node, cost}
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[1] - b[1]);
+        Set<Integer> visited = new HashSet<>();
+        
+        pq.add(new int[]{start, 0});
+        
+        while (!pq.isEmpty()) {
+            int[] current = pq.poll();
+            int node = current[0];
+            int cost = current[1];
+            
+            if (node == goal) return cost;
+            
+            if (visited.contains(node)) continue;
+            visited.add(node);
+            
+            for (int[] neighbor : graph.get(node)) {
+                if (!visited.contains(neighbor[0])) {
+                    pq.add(new int[]{neighbor[0], cost + neighbor[1]});
+                }
+            }
+        }
+        return -1;
+    }
+}`,
 	},
 	"Tree Sort": {
 		javascript: `class Node {
@@ -568,24 +2027,24 @@ export const codeSnippets: Record<
       this.left = null;
       this.right = null;
     }
-  }
-  
-  function treeSort(arr) {
+}
+
+function treeSort(arr) {
     if (arr.length === 0) return arr;
-    
+
     // Build BST
     let root = new Node(arr[0]);
     for (let i = 1; i < arr.length; i++) {
       insert(root, arr[i]);
     }
-    
-    // In-order traversal
+
+    // In-order traversal to get sorted elements
     const result = [];
     inOrder(root, result);
     return result;
-  }
-  
-  function insert(node, value) {
+}
+
+function insert(node, value) {
     if (value < node.value) {
       if (node.left === null) {
         node.left = new Node(value);
@@ -599,377 +2058,328 @@ export const codeSnippets: Record<
         insert(node.right, value);
       }
     }
-  }
-  
-  function inOrder(node, result) {
+}
+
+function inOrder(node, result) {
     if (node !== null) {
       inOrder(node.left, result);
       result.push(node.value);
       inOrder(node.right, result);
     }
-  }
-  
-  // Time Complexity: O(n log n) average, O(n²) worst
-  // Space Complexity: O(n)`,
+}
+// Time Complexity: O(n log n) average`,
 		python: `class Node:
-      def __init__(self, value):
-          self.value = value
-          self.left = None
-          self.right = None
-  
-  def tree_sort(arr):
-      if not arr:
-          return arr
-      
-      # Build BST
-      root = Node(arr[0])
-      for value in arr[1:]:
-          insert(root, value)
-      
-      # In-order traversal
-      result = []
-      in_order(root, result)
-      return result
-  
-  def insert(node, value):
-      if value < node.value:
-          if node.left is None:
-              node.left = Node(value)
-          else:
-              insert(node.left, value)
-      else:
-          if node.right is None:
-              node.right = Node(value)
-          else:
-              insert(node.right, value)
-  
-  def in_order(node, result):
-      if node is not None:
-          in_order(node.left, result)
-          result.append(node.value)
-          in_order(node.right, result)
-  
-  # Time Complexity: O(n log n) average, O(n²) worst
-  # Space Complexity: O(n)`,
-		java: `class Node {
-      int value;
-      Node left, right;
-      
-      Node(int value) {
-          this.value = value;
-          left = right = null;
-      }
-  }
-  
-  public static int[] treeSort(int[] arr) {
-      if (arr.length == 0) return arr;
-      
-      // Build BST
-      Node root = new Node(arr[0]);
-      for (int i = 1; i < arr.length; i++) {
-          insert(root, arr[i]);
-      }
-      
-      // In-order traversal
-      List<Integer> result = new ArrayList<>();
-      inOrder(root, result);
-      
-      return result.stream().mapToInt(i -> i).toArray();
-  }
-  
-  public static void insert(Node node, int value) {
-      if (value < node.value) {
-          if (node.left == null) {
-              node.left = new Node(value);
-          } else {
-              insert(node.left, value);
-          }
-      } else {
-          if (node.right == null) {
-              node.right = new Node(value);
-          } else {
-              insert(node.right, value);
-          }
-      }
-  }
-  
-  public static void inOrder(Node node, List<Integer> result) {
-      if (node != null) {
-          inOrder(node.left, result);
-          result.add(node.value);
-          inOrder(node.right, result);
-      }
-  }
-  
-  // Time Complexity: O(n log n) average, O(n²) worst
-  // Space Complexity: O(n)`,
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+def tree_sort(arr):
+    if not arr: return arr
+    
+    root = Node(arr[0])
+    for value in arr[1:]:
+        insert(root, value)
+        
+    result = []
+    in_order(root, result)
+    return result
+
+def insert(node, value):
+    if value < node.value:
+        if node.left is None:
+            node.left = Node(value)
+        else:
+            insert(node.left, value)
+    else:
+        if node.right is None:
+            node.right = Node(value)
+        else:
+            insert(node.right, value)
+
+def in_order(node, result):
+    if node:
+        in_order(node.left, result)
+        result.append(node.value)
+        in_order(node.right, result)
+        
+# Time Complexity: O(n log n) average`,
+		java: `import java.util.*;
+
+class Node {
+    int value;
+    Node left, right;
+    Node(int value) {
+        this.value = value;
+        left = right = null;
+    }
+}
+
+public class TreeSort {
+    public static void insert(Node node, int value) {
+        if (value < node.value) {
+            if (node.left == null) node.left = new Node(value);
+            else insert(node.left, value);
+        } else {
+            if (node.right == null) node.right = new Node(value);
+            else insert(node.right, value);
+        }
+    }
+
+    public static void inOrder(Node node, List<Integer> result) {
+        if (node != null) {
+            inOrder(node.left, result);
+            result.add(node.value);
+            inOrder(node.right, result);
+        }
+    }
+
+    public static int[] treeSort(int[] arr) {
+        if (arr.length == 0) return arr;
+        Node root = new Node(arr[0]);
+        for (int i = 1; i < arr.length; i++) {
+            insert(root, arr[i]);
+        }
+        
+        List<Integer> result = new ArrayList<>();
+        inOrder(root, result);
+        return result.stream().mapToInt(i -> i).toArray();
+    }
+}
+// Time Complexity: O(n log n) average`,
 	},
+
 	"Tim Sort": {
 		javascript: `function timSort(arr) {
     const MIN_MERGE = 32;
     const n = arr.length;
-    
+
     // Sort individual subarrays of size MIN_MERGE
     for (let i = 0; i < n; i += MIN_MERGE) {
       insertionSort(arr, i, Math.min(i + MIN_MERGE - 1, n - 1));
     }
-    
+
     // Merge subarrays
     for (let size = MIN_MERGE; size < n; size *= 2) {
       for (let start = 0; start < n; start += 2 * size) {
         const mid = start + size - 1;
         const end = Math.min(start + 2 * size - 1, n - 1);
-        
         if (mid < end) {
           merge(arr, start, mid, end);
         }
       }
     }
-    
     return arr;
-  }
-  
-  function insertionSort(arr, left, right) {
+}
+
+// Helper insertion sort
+function insertionSort(arr, left, right) {
     for (let i = left + 1; i <= right; i++) {
-      const key = arr[i];
-      let j = i - 1;
-      
-      while (j >= left && arr[j] > key) {
-        arr[j + 1] = arr[j];
-        j--;
-      }
-      arr[j + 1] = key;
+        let temp = arr[i];
+        let j = i - 1;
+        while (j >= left && arr[j] > temp) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = temp;
     }
-  }
-  
-  function merge(arr, left, mid, right) {
-    const leftArr = arr.slice(left, mid + 1);
-    const rightArr = arr.slice(mid + 1, right + 1);
+}
+
+// Helper merge function
+function merge(arr, l, m, r) {
+    let len1 = m - l + 1, len2 = r - m;
+    let left = new Array(len1);
+    let right = new Array(len2);
+    for (let x = 0; x < len1; x++) left[x] = arr[l + x];
+    for (let x = 0; x < len2; x++) right[x] = arr[m + 1 + x];
     
-    let i = 0, j = 0, k = left;
-    
-    while (i < leftArr.length && j < rightArr.length) {
-      if (leftArr[i] <= rightArr[j]) {
-        arr[k++] = leftArr[i++];
-      } else {
-        arr[k++] = rightArr[j++];
-      }
+    let i = 0, j = 0, k = l;
+    while (i < len1 && j < len2) {
+        if (left[i] <= right[j]) arr[k++] = left[i++];
+        else arr[k++] = right[j++];
     }
-    
-    while (i < leftArr.length) arr[k++] = leftArr[i++];
-    while (j < rightArr.length) arr[k++] = rightArr[j++];
-  }
-  
-  // Time Complexity: O(n log n)
-  // Space Complexity: O(n)`,
+    while (i < len1) arr[k++] = left[i++];
+    while (j < len2) arr[k++] = right[j++];
+}
+// Time Complexity: O(n log n)`,
 		python: `def tim_sort(arr):
-      MIN_MERGE = 32
-      n = len(arr)
-      
-      # Sort individual subarrays of size MIN_MERGE
-      for start in range(0, n, MIN_MERGE):
-          end = min(start + MIN_MERGE - 1, n - 1)
-          insertion_sort(arr, start, end)
-      
-      # Merge subarrays
-      size = MIN_MERGE
-      while size < n:
-          for start in range(0, n, size * 2):
-              mid = start + size - 1
-              end = min(start + size * 2 - 1, n - 1)
-              
-              if mid < end:
-                  merge(arr, start, mid, end)
-          
-          size *= 2
-      
-      return arr
-  
-  def insertion_sort(arr, left, right):
-      for i in range(left + 1, right + 1):
-          key = arr[i]
-          j = i - 1
-          
-          while j >= left and arr[j] > key:
-              arr[j + 1] = arr[j]
-              j -= 1
-          arr[j + 1] = key
-  
-  def merge(arr, left, mid, right):
-      left_arr = arr[left:mid + 1]
-      right_arr = arr[mid + 1:right + 1]
-      
-      i = j = 0
-      k = left
-      
-      while i < len(left_arr) and j < len(right_arr):
-          if left_arr[i] <= right_arr[j]:
-              arr[k] = left_arr[i]
-              i += 1
-          else:
-              arr[k] = right_arr[j]
-              j += 1
-          k += 1
-      
-      while i < len(left_arr):
-          arr[k] = left_arr[i]
-          i += 1
-          k += 1
-      
-      while j < len(right_arr):
-          arr[k] = right_arr[j]
-          j += 1
-          k += 1
-  
-  # Time Complexity: O(n log n)
-  # Space Complexity: O(n)`,
-		java: `public static void timSort(int[] arr) {
-      final int MIN_MERGE = 32;
-      int n = arr.length;
-      
-      // Sort individual subarrays of size MIN_MERGE
-      for (int i = 0; i < n; i += MIN_MERGE) {
-          insertionSort(arr, i, Math.min(i + MIN_MERGE - 1, n - 1));
-      }
-      
-      // Merge subarrays
-      for (int size = MIN_MERGE; size < n; size *= 2) {
-          for (int start = 0; start < n; start += 2 * size) {
-              int mid = start + size - 1;
-              int end = Math.min(start + 2 * size - 1, n - 1);
-              
-              if (mid < end) {
-                  merge(arr, start, mid, end);
-              }
-          }
-      }
-  }
-  
-  public static void insertionSort(int[] arr, int left, int right) {
-      for (int i = left + 1; i <= right; i++) {
-          int key = arr[i];
-          int j = i - 1;
-          
-          while (j >= left && arr[j] > key) {
-              arr[j + 1] = arr[j];
-              j--;
-          }
-          arr[j + 1] = key;
-      }
-  }
-  
-  // Time Complexity: O(n log n)
-  // Space Complexity: O(n)`,
+    MIN_MERGE = 32
+    n = len(arr)
+    
+    # Insertion Sort small runs
+    for i in range(0, n, MIN_MERGE):
+        insertion_sort(arr, i, min((i + MIN_MERGE - 1), n - 1))
+        
+    size = MIN_MERGE
+    while size < n:
+        for left in range(0, n, 2 * size):
+            mid = left + size - 1
+            right = min((left + 2 * size - 1), (n - 1))
+            if mid < right:
+                merge(arr, left, mid, right)
+        size = 2 * size
+    return arr
+
+def insertion_sort(arr, left, right):
+    for i in range(left + 1, right + 1):
+        j = i
+        while j > left and arr[j] < arr[j - 1]:
+            arr[j], arr[j - 1] = arr[j - 1], arr[j]
+            j -= 1
+
+def merge(arr, l, m, r):
+    len1, len2 = m - l + 1, r - m
+    left, right = [], []
+    for i in range(0, len1): left.append(arr[l + i])
+    for i in range(0, len2): right.append(arr[m + 1 + i])
+    
+    i, j, k = 0, 0, l
+    while i < len1 and j < len2:
+        if left[i] <= right[j]:
+            arr[k] = left[i]; i += 1
+        else:
+            arr[k] = right[j]; j += 1
+        k += 1
+    while i < len1: arr[k] = left[i]; k += 1; i += 1
+    while j < len2: arr[k] = right[j]; k += 1; j += 1
+
+# Time Complexity: O(n log n)`,
+		java: `public class TimSort {
+    static int MIN_MERGE = 32;
+
+    public static void timSort(int[] arr, int n) {
+        // Insertion Sort for small runs
+        for (int i = 0; i < n; i += MIN_MERGE) {
+            insertionSort(arr, i, Math.min((i + MIN_MERGE - 1), (n - 1)));
+        }
+
+        // Merge runs
+        for (int size = MIN_MERGE; size < n; size = 2 * size) {
+            for (int left = 0; left < n; left += 2 * size) {
+                int mid = left + size - 1;
+                int right = Math.min((left + 2 * size - 1), (n - 1));
+                if (mid < right)
+                    merge(arr, left, mid, right);
+            }
+        }
+    }
+
+    public static void insertionSort(int[] arr, int left, int right) {
+        for (int i = left + 1; i <= right; i++) {
+            int temp = arr[i];
+            int j = i - 1;
+            while (j >= left && arr[j] > temp) {
+                arr[j + 1] = arr[j];
+                j--;
+            }
+            arr[j + 1] = temp;
+        }
+    }
+
+    public static void merge(int[] arr, int l, int m, int r) {
+        int len1 = m - l + 1, len2 = r - m;
+        int[] left = new int[len1];
+        int[] right = new int[len2];
+        for (int x = 0; x < len1; x++) left[x] = arr[l + x];
+        for (int x = 0; x < len2; x++) right[x] = arr[m + 1 + x];
+
+        int i = 0, j = 0, k = l;
+        while (i < len1 && j < len2) {
+            if (left[i] <= right[j]) arr[k++] = left[i++];
+            else arr[k++] = right[j++];
+        }
+        while (i < len1) arr[k++] = left[i++];
+        while (j < len2) arr[k++] = right[j++];
+    }
+}`,
 	},
 	"Cocktail Shaker Sort": {
 		javascript: `function cocktailShakerSort(arr) {
     let swapped = true;
     let start = 0;
     let end = arr.length - 1;
-    
+
     while (swapped) {
       swapped = false;
-      
       // Forward pass
       for (let i = start; i < end; i++) {
         if (arr[i] > arr[i + 1]) {
-          [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
-          swapped = true;
+            [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
+            swapped = true;
         }
       }
-      
       if (!swapped) break;
-      
       swapped = false;
       end--;
-      
       // Backward pass
       for (let i = end; i > start; i--) {
         if (arr[i] < arr[i - 1]) {
-          [arr[i], arr[i - 1]] = [arr[i - 1], arr[i]];
-          swapped = true;
+            [arr[i], arr[i - 1]] = [arr[i - 1], arr[i]];
+            swapped = true;
         }
       }
-      
       start++;
     }
-    
     return arr;
-  }
-  
-  // Time Complexity: O(n²)
-  // Space Complexity: O(1)`,
+}
+// Time Complexity: O(n²)`,
 		python: `def cocktail_shaker_sort(arr):
-      swapped = True
-      start = 0
-      end = len(arr) - 1
-      
-      while swapped:
-          swapped = False
-          
-          # Forward pass
-          for i in range(start, end):
-              if arr[i] > arr[i + 1]:
-                  arr[i], arr[i + 1] = arr[i + 1], arr[i]
-                  swapped = True
-          
-          if not swapped:
-              break
-          
-          swapped = False
-          end -= 1
-          
-          # Backward pass
-          for i in range(end, start, -1):
-              if arr[i] < arr[i - 1]:
-                  arr[i], arr[i - 1] = arr[i - 1], arr[i]
-                  swapped = True
-          
-          start += 1
-      
-      return arr
-  
-  # Time Complexity: O(n²)
-  # Space Complexity: O(1)`,
+    n = len(arr)
+    swapped = True
+    start = 0
+    end = n - 1
+    
+    while swapped:
+        swapped = False
+        # Forward pass
+        for i in range(start, end):
+            if arr[i] > arr[i + 1]:
+                arr[i], arr[i + 1] = arr[i + 1], arr[i]
+                swapped = True
+        if not swapped:
+            break
+        swapped = False
+        end = end - 1
+        # Backward pass
+        for i in range(end - 1, start - 1, -1):
+            if arr[i] > arr[i + 1]:
+                arr[i], arr[i + 1] = arr[i + 1], arr[i]
+                swapped = True
+        start = start + 1
+    return arr
+# Time Complexity: O(n²)`,
 		java: `public static void cocktailShakerSort(int[] arr) {
-      boolean swapped = true;
-      int start = 0;
-      int end = arr.length - 1;
-      
-      while (swapped) {
-          swapped = false;
-          
-          // Forward pass
-          for (int i = start; i < end; i++) {
-              if (arr[i] > arr[i + 1]) {
-                  int temp = arr[i];
-                  arr[i] = arr[i + 1];
-                  arr[i + 1] = temp;
-                  swapped = true;
-              }
-          }
-          
-          if (!swapped) break;
-          
-          swapped = false;
-          end--;
-          
-          // Backward pass
-          for (int i = end; i > start; i--) {
-              if (arr[i] < arr[i - 1]) {
-                  int temp = arr[i];
-                  arr[i] = arr[i - 1];
-                  arr[i - 1] = temp;
-                  swapped = true;
-              }
-          }
-          
-          start++;
-      }
-  }
-  
-  // Time Complexity: O(n²)
-  // Space Complexity: O(1)`,
+    boolean swapped = true;
+    int start = 0;
+    int end = arr.length;
+
+    while (swapped) {
+        swapped = false;
+        // Forward pass
+        for (int i = start; i < end - 1; ++i) {
+            if (arr[i] > arr[i + 1]) {
+                int temp = arr[i];
+                arr[i] = arr[i + 1];
+                arr[i + 1] = temp;
+                swapped = true;
+            }
+        }
+        if (!swapped) break;
+        swapped = false;
+        end = end - 1;
+        // Backward pass
+        for (int i = end - 1; i >= start; i--) {
+            if (arr[i] > arr[i + 1]) {
+                int temp = arr[i];
+                arr[i] = arr[i + 1];
+                arr[i + 1] = temp;
+                swapped = true;
+            }
+        }
+        start = start + 1;
+    }
+}
+// Time Complexity: O(n²)`,
 	},
 	"Counting Sort": {
 		javascript: `function countingSort(arr) {
@@ -982,2193 +2392,312 @@ export const codeSnippets: Record<
     const count = new Array(range).fill(0);
     const output = new Array(arr.length);
     
-    // Count occurrences
     for (let i = 0; i < arr.length; i++) {
       count[arr[i] - min]++;
     }
     
-    // Calculate cumulative count
     for (let i = 1; i < count.length; i++) {
       count[i] += count[i - 1];
     }
     
-    // Build output array
     for (let i = arr.length - 1; i >= 0; i--) {
       output[count[arr[i] - min] - 1] = arr[i];
       count[arr[i] - min]--;
     }
     
     return output;
-  }
-  
-  // Time Complexity: O(n + k) where k is range
-  // Space Complexity: O(n + k)`,
+}
+// Time Complexity: O(n + k)`,
 		python: `def counting_sort(arr):
-      if not arr:
-          return arr
-      
-      max_val = max(arr)
-      min_val = min(arr)
-      range_val = max_val - min_val + 1
-      
-      count = [0] * range_val
-      output = [0] * len(arr)
-      
-      # Count occurrences
-      for num in arr:
-          count[num - min_val] += 1
-      
-      # Calculate cumulative count
-      for i in range(1, len(count)):
-          count[i] += count[i - 1]
-      
-      # Build output array
-      for i in range(len(arr) - 1, -1, -1):
-          output[count[arr[i] - min_val] - 1] = arr[i]
-          count[arr[i] - min_val] -= 1
-      
-      return output
-  
-  # Time Complexity: O(n + k) where k is range
-  # Space Complexity: O(n + k)`,
-		java: `public static int[] countingSort(int[] arr) {
-      if (arr.length == 0) return arr;
-      
-      int max = Arrays.stream(arr).max().getAsInt();
-      int min = Arrays.stream(arr).min().getAsInt();
-      int range = max - min + 1;
-      
-      int[] count = new int[range];
-      int[] output = new int[arr.length];
-      
-      // Count occurrences
-      for (int num : arr) {
-          count[num - min]++;
-      }
-      
-      // Calculate cumulative count
-      for (int i = 1; i < count.length; i++) {
-          count[i] += count[i - 1];
-      }
-      
-      // Build output array
-      for (int i = arr.length - 1; i >= 0; i--) {
-          output[count[arr[i] - min] - 1] = arr[i];
-          count[arr[i] - min]--;
-      }
-      
-      return output;
-  }
-  
-  // Time Complexity: O(n + k) where k is range
-  // Space Complexity: O(n + k)`,
+    max_element = max(arr)
+    min_element = min(arr)
+    range_of_elements = max_element - min_element + 1
+    
+    count_arr = [0 for _ in range(range_of_elements)]
+    output_arr = [0 for _ in range(len(arr))]
+    
+    for i in range(0, len(arr)):
+        count_arr[arr[i] - min_element] += 1
+        
+    for i in range(1, len(count_arr)):
+        count_arr[i] += count_arr[i-1]
+        
+    for i in range(len(arr)-1, -1, -1):
+        output_arr[count_arr[arr[i] - min_element] - 1] = arr[i]
+        count_arr[arr[i] - min_element] -= 1
+        
+    return output_arr
+# Time Complexity: O(n + k)`,
+		java: `import java.util.Arrays;
+
+public static int[] countingSort(int[] arr) {
+    int max = Arrays.stream(arr).max().getAsInt();
+    int min = Arrays.stream(arr).min().getAsInt();
+    int range = max - min + 1;
+    int count[] = new int[range];
+    int output[] = new int[arr.length];
+    
+    for (int i = 0; i < arr.length; i++) {
+        count[arr[i] - min]++;
+    }
+    
+    for (int i = 1; i < count.length; i++) {
+        count[i] += count[i - 1];
+    }
+    
+    for (int i = arr.length - 1; i >= 0; i--) {
+        output[count[arr[i] - min] - 1] = arr[i];
+        count[arr[i] - min]--;
+    }
+    return output;
+}
+// Time Complexity: O(n + k)`,
 	},
 	"Radix Sort": {
 		javascript: `function radixSort(arr) {
     const max = Math.max(...arr);
-    
-    // Do counting sort for every digit
     for (let exp = 1; Math.floor(max / exp) > 0; exp *= 10) {
-      countingSortByDigit(arr, exp);
+        countingSortByDigit(arr, exp);
     }
-    
     return arr;
-  }
-  
-  function countingSortByDigit(arr, exp) {
+}
+
+function countingSortByDigit(arr, exp) {
     const n = arr.length;
     const output = new Array(n);
     const count = new Array(10).fill(0);
     
-    // Count occurrences of digits
     for (let i = 0; i < n; i++) {
-      const digit = Math.floor(arr[i] / exp) % 10;
-      count[digit]++;
+        let index = Math.floor(arr[i] / exp);
+        count[index % 10]++;
     }
     
-    // Calculate cumulative count
     for (let i = 1; i < 10; i++) {
-      count[i] += count[i - 1];
+        count[i] += count[i - 1];
     }
     
-    // Build output array
     for (let i = n - 1; i >= 0; i--) {
-      const digit = Math.floor(arr[i] / exp) % 10;
-      output[count[digit] - 1] = arr[i];
-      count[digit]--;
+        let index = Math.floor(arr[i] / exp);
+        output[count[index % 10] - 1] = arr[i];
+        count[index % 10]--;
     }
     
-    // Copy output to arr
     for (let i = 0; i < n; i++) {
-      arr[i] = output[i];
+        arr[i] = output[i];
     }
-  }
-  
-  // Time Complexity: O(d * (n + k)) where d is digits
-  // Space Complexity: O(n + k)`,
+}
+// Time Complexity: O(d * (n + k))`,
 		python: `def radix_sort(arr):
-      max_val = max(arr)
-      
-      # Do counting sort for every digit
-      exp = 1
-      while max_val // exp > 0:
-          counting_sort_by_digit(arr, exp)
-          exp *= 10
-      
-      return arr
-  
-  def counting_sort_by_digit(arr, exp):
-      n = len(arr)
-      output = [0] * n
-      count = [0] * 10
-      
-      # Count occurrences of digits
-      for num in arr:
-          digit = (num // exp) % 10
-          count[digit] += 1
-      
-      # Calculate cumulative count
-      for i in range(1, 10):
-          count[i] += count[i - 1]
-      
-      # Build output array
-      for i in range(n - 1, -1, -1):
-          digit = (arr[i] // exp) % 10
-          output[count[digit] - 1] = arr[i]
-          count[digit] -= 1
-      
-      # Copy output to arr
-      for i in range(n):
-          arr[i] = output[i]
-  
-  # Time Complexity: O(d * (n + k)) where d is digits
-  # Space Complexity: O(n + k)`,
-		java: `public static void radixSort(int[] arr) {
-      int max = Arrays.stream(arr).max().getAsInt();
-      
-      // Do counting sort for every digit
-      for (int exp = 1; max / exp > 0; exp *= 10) {
-          countingSortByDigit(arr, exp);
-      }
-  }
-  
-  public static void countingSortByDigit(int[] arr, int exp) {
-      int n = arr.length;
-      int[] output = new int[n];
-      int[] count = new int[10];
-      
-      // Count occurrences of digits
-      for (int num : arr) {
-          int digit = (num / exp) % 10;
-          count[digit]++;
-      }
-      
-      // Calculate cumulative count
-      for (int i = 1; i < 10; i++) {
-          count[i] += count[i - 1];
-      }
-      
-      // Build output array
-      for (int i = n - 1; i >= 0; i--) {
-          int digit = (arr[i] / exp) % 10;
-          output[count[digit] - 1] = arr[i];
-          count[digit]--;
-      }
-      
-      // Copy output to arr
-      for (int i = 0; i < n; i++) {
-          arr[i] = output[i];
-      }
-  }
-  
-  // Time Complexity: O(d * (n + k)) where d is digits
-  // Space Complexity: O(n + k)`,
-	},
-	"Linear Search": {
-		javascript: `function linearSearch(arr, target) {
-    for (let i = 0; i < arr.length; i++) {
-      if (arr[i] === target) {
-        return i; // Return index if found
-      }
-    }
-    return -1; // Return -1 if not found
-  }
-  
-  // Time Complexity: O(n)
-  // Space Complexity: O(1)`,
-		python: `def linear_search(arr, target):
-      for i in range(len(arr)):
-          if arr[i] == target:
-              return i  # Return index if found
-      return -1  # Return -1 if not found
-  
-  # Time Complexity: O(n)
-  # Space Complexity: O(1)`,
-		java: `public static int linearSearch(int[] arr, int target) {
-      for (int i = 0; i < arr.length; i++) {
-          if (arr[i] == target) {
-              return i; // Return index if found
-          }
-      }
-      return -1; // Return -1 if not found
-  }
-  
-  // Time Complexity: O(n)
-  // Space Complexity: O(1)`,
-	},
-	"Binary Search": {
-		javascript: `function binarySearch(arr, target) {
-    let left = 0;
-    let right = arr.length - 1;
+    max1 = max(arr)
+    exp = 1
+    while max1 // exp > 0:
+        counting_sort(arr, exp)
+        exp *= 10
+
+def counting_sort(arr, exp):
+    n = len(arr)
+    output = [0] * n
+    count = [0] * 10
     
-    while (left <= right) {
-      const mid = Math.floor((left + right) / 2);
-      
-      if (arr[mid] === target) {
-        return mid; // Found
-      } else if (arr[mid] < target) {
-        left = mid + 1; // Search right half
-      } else {
-        right = mid - 1; // Search left half
-      }
+    for i in range(0, n):
+        index = arr[i] // exp
+        count[index % 10] += 1
+        
+    for i in range(1, 10):
+        count[i] += count[i - 1]
+        
+    i = n - 1
+    while i >= 0:
+        index = arr[i] // exp
+        output[count[index % 10] - 1] = arr[i]
+        count[index % 10] -= 1
+        i -= 1
+        
+    for i in range(0, n):
+        arr[i] = output[i]
+# Time Complexity: O(d * (n + k))`,
+		java: `import java.util.Arrays;
+
+public static void radixSort(int[] arr) {
+    int max = Arrays.stream(arr).max().getAsInt();
+    for (int exp = 1; max / exp > 0; exp *= 10) {
+        countSort(arr, exp);
+    }
+}
+
+public static void countSort(int[] arr, int exp) {
+    int n = arr.length;
+    int output[] = new int[n];
+    int count[] = new int[10];
+    Arrays.fill(count, 0);
+    
+    for (int i = 0; i < n; i++)
+        count[(arr[i] / exp) % 10]++;
+        
+    for (int i = 1; i < 10; i++)
+        count[i] += count[i - 1];
+        
+    for (int i = n - 1; i >= 0; i--) {
+        output[count[(arr[i] / exp) % 10] - 1] = arr[i];
+        count[(arr[i] / exp) % 10]--;
     }
     
-    return -1; // Not found
-  }
-  
-  // Time Complexity: O(log n)
-  // Space Complexity: O(1)
-  // Note: Array must be sorted`,
-		python: `def binary_search(arr, target):
-      left = 0
-      right = len(arr) - 1
-      
-      while left <= right:
-          mid = (left + right) // 2
-          
-          if arr[mid] == target:
-              return mid  # Found
-          elif arr[mid] < target:
-              left = mid + 1  # Search right half
-          else:
-              right = mid - 1  # Search left half
-      
-      return -1  # Not found
-  
-  # Time Complexity: O(log n)
-  # Space Complexity: O(1)
-  # Note: Array must be sorted`,
-		java: `public static int binarySearch(int[] arr, int target) {
-      int left = 0;
-      int right = arr.length - 1;
-      
-      while (left <= right) {
-          int mid = left + (right - left) / 2;
-          
-          if (arr[mid] == target) {
-              return mid; // Found
-          } else if (arr[mid] < target) {
-              left = mid + 1; // Search right half
-          } else {
-              right = mid - 1; // Search left half
-          }
-      }
-      
-      return -1; // Not found
-  }
-  
-  // Time Complexity: O(log n)
-  // Space Complexity: O(1)
-  // Note: Array must be sorted`,
-	},
-	"Jump Search": {
-		javascript: `function jumpSearch(arr, target) {
-    const n = arr.length;
-    const step = Math.floor(Math.sqrt(n));
-    let prev = 0;
-    
-    // Find block where element is present
-    while (arr[Math.min(step, n) - 1] < target) {
-      prev = step;
-      step += Math.floor(Math.sqrt(n));
-      if (prev >= n) {
-        return -1;
-      }
-    }
-    
-    // Linear search in block
-    while (arr[prev] < target) {
-      prev++;
-      if (prev === Math.min(step, n)) {
-        return -1;
-      }
-    }
-    
-    if (arr[prev] === target) {
-      return prev;
-    }
-    
-    return -1;
-  }
-  
-  // Time Complexity: O(√n)
-  // Space Complexity: O(1)`,
-		python: `import math
-  
-  def jump_search(arr, target):
-      n = len(arr)
-      step = int(math.sqrt(n))
-      prev = 0
-      
-      # Find block where element is present
-      while arr[min(step, n) - 1] < target:
-          prev = step
-          step += int(math.sqrt(n))
-          if prev >= n:
-              return -1
-      
-      # Linear search in block
-      while arr[prev] < target:
-          prev += 1
-          if prev == min(step, n):
-              return -1
-      
-      if arr[prev] == target:
-          return prev
-      
-      return -1
-  
-  # Time Complexity: O(√n)
-  # Space Complexity: O(1)`,
-		java: `public static int jumpSearch(int[] arr, int target) {
-      int n = arr.length;
-      int step = (int) Math.sqrt(n);
-      int prev = 0;
-      
-      // Find block where element is present
-      while (arr[Math.min(step, n) - 1] < target) {
-          prev = step;
-          step += (int) Math.sqrt(n);
-          if (prev >= n) {
-              return -1;
-          }
-      }
-      
-      // Linear search in block
-      while (arr[prev] < target) {
-          prev++;
-          if (prev == Math.min(step, n)) {
-              return -1;
-          }
-      }
-      
-      if (arr[prev] == target) {
-          return prev;
-      }
-      
-      return -1;
-  }
-  
-  // Time Complexity: O(√n)
-  // Space Complexity: O(1)`,
-	},
-	"Interpolation Search": {
-		javascript: `function interpolationSearch(arr, target) {
-    let low = 0;
-    let high = arr.length - 1;
-    
-    while (low <= high && target >= arr[low] && target <= arr[high]) {
-      if (low === high) {
-        if (arr[low] === target) return low;
-        return -1;
-      }
-      
-      // Probing position with uniform distribution
-      const pos = low + Math.floor(
-        ((target - arr[low]) * (high - low)) / 
-        (arr[high] - arr[low])
-      );
-      
-      if (arr[pos] === target) {
-        return pos;
-      }
-      
-      if (arr[pos] < target) {
-        low = pos + 1;
-      } else {
-        high = pos - 1;
-      }
-    }
-    
-    return -1;
-  }
-  
-  // Time Complexity: O(log log n) average, O(n) worst
-  // Space Complexity: O(1)`,
-		python: `def interpolation_search(arr, target):
-      low = 0
-      high = len(arr) - 1
-      
-      while low <= high and target >= arr[low] and target <= arr[high]:
-          if low == high:
-              if arr[low] == target:
-                  return low
-              return -1
-          
-          # Probing position with uniform distribution
-          pos = low + int(
-              ((target - arr[low]) * (high - low)) / 
-              (arr[high] - arr[low])
-          )
-          
-          if arr[pos] == target:
-              return pos
-          
-          if arr[pos] < target:
-              low = pos + 1
-          else:
-              high = pos - 1
-      
-      return -1
-  
-  # Time Complexity: O(log log n) average, O(n) worst
-  # Space Complexity: O(1)`,
-		java: `public static int interpolationSearch(int[] arr, int target) {
-      int low = 0;
-      int high = arr.length - 1;
-      
-      while (low <= high && target >= arr[low] && target <= arr[high]) {
-          if (low == high) {
-              if (arr[low] == target) return low;
-              return -1;
-          }
-          
-          // Probing position with uniform distribution
-          int pos = low + (int)(
-              ((double)(target - arr[low]) * (high - low)) / 
-              (arr[high] - arr[low])
-          );
-          
-          if (arr[pos] == target) {
-              return pos;
-          }
-          
-          if (arr[pos] < target) {
-              low = pos + 1;
-          } else {
-              high = pos - 1;
-          }
-      }
-      
-      return -1;
-  }
-  
-  // Time Complexity: O(log log n) average, O(n) worst
-  // Space Complexity: O(1)`,
+    for (int i = 0; i < n; i++)
+        arr[i] = output[i];
+}
+// Time Complexity: O(d * (n + k))`,
 	},
 	"Exponential Search": {
 		javascript: `function exponentialSearch(arr, target) {
     const n = arr.length;
-    
-    if (arr[0] === target) {
-      return 0;
-    }
+    if (arr[0] === target) return 0;
     
     // Find range for binary search
     let i = 1;
     while (i < n && arr[i] <= target) {
-      i *= 2;
+        i = i * 2;
     }
     
-    // Binary search in found range
     return binarySearch(arr, target, Math.floor(i / 2), Math.min(i, n - 1));
-  }
-  
-  function binarySearch(arr, target, left, right) {
+}
+
+// Standard Binary Search helper
+function binarySearch(arr, target, left, right) {
     while (left <= right) {
-      const mid = Math.floor((left + right) / 2);
-      
-      if (arr[mid] === target) {
-        return mid;
-      } else if (arr[mid] < target) {
-        left = mid + 1;
-      } else {
-        right = mid - 1;
-      }
+        let mid = Math.floor((left + right) / 2);
+        if (arr[mid] === target) return mid;
+        if (arr[mid] < target) left = mid + 1;
+        else right = mid - 1;
     }
-    
     return -1;
-  }
-  
-  // Time Complexity: O(log n)
-  // Space Complexity: O(1)`,
+}
+// Time Complexity: O(log n)`,
 		python: `def exponential_search(arr, target):
-      n = len(arr)
-      
-      if arr[0] == target:
-          return 0
-      
-      # Find range for binary search
-      i = 1
-      while i < n and arr[i] <= target:
-          i *= 2
-      
-      # Binary search in found range
-      return binary_search(arr, target, i // 2, min(i, n - 1))
-  
-  def binary_search(arr, target, left, right):
-      while left <= right:
-          mid = (left + right) // 2
-          
-          if arr[mid] == target:
-              return mid
-          elif arr[mid] < target:
-              left = mid + 1
-          else:
-              right = mid - 1
-      
-      return -1
-  
-  # Time Complexity: O(log n)
-  # Space Complexity: O(1)`,
+    if arr[0] == target:
+        return 0
+    i = 1
+    while i < len(arr) and arr[i] <= target:
+        i = i * 2
+    return binary_search(arr, target, i // 2, min(i, len(arr) - 1))
+
+def binary_search(arr, target, left, right):
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target: return mid
+        elif arr[mid] < target: left = mid + 1
+        else: right = mid - 1
+    return -1
+# Time Complexity: O(log n)`,
 		java: `public static int exponentialSearch(int[] arr, int target) {
-      int n = arr.length;
-      
-      if (arr[0] == target) {
-          return 0;
-      }
-      
-      // Find range for binary search
-      int i = 1;
-      while (i < n && arr[i] <= target) {
-          i *= 2;
-      }
-      
-      // Binary search in found range
-      return binarySearch(arr, target, i / 2, Math.min(i, n - 1));
-  }
-  
-  public static int binarySearch(int[] arr, int target, int left, int right) {
-      while (left <= right) {
-          int mid = left + (right - left) / 2;
-          
-          if (arr[mid] == target) {
-              return mid;
-          } else if (arr[mid] < target) {
-              left = mid + 1;
-          } else {
-              right = mid - 1;
-          }
-      }
-      
-      return -1;
-  }
-  
-  // Time Complexity: O(log n)
-  // Space Complexity: O(1)`,
+    if (arr[0] == target) return 0;
+    int i = 1;
+    while (i < arr.length && arr[i] <= target) {
+        i = i * 2;
+    }
+    return binarySearch(arr, target, i / 2, Math.min(i, arr.length - 1));
+}
+
+public static int binarySearch(int[] arr, int target, int left, int right) {
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        if (arr[mid] == target) return mid;
+        if (arr[mid] < target) left = mid + 1;
+        else right = mid - 1;
+    }
+    return -1;
+}
+// Time Complexity: O(log n)`,
 	},
 	"Fibonacci Search": {
 		javascript: `function fibonacciSearch(arr, target) {
     const n = arr.length;
-    
-    // Initialize Fibonacci numbers
-    let fibM2 = 0; // (m-2)'th Fibonacci
-    let fibM1 = 1; // (m-1)'th Fibonacci
+    let fibM2 = 0; // (m-2)'th Fibonacci No.
+    let fibM1 = 1; // (m-1)'th Fibonacci No.
     let fibM = fibM2 + fibM1; // m'th Fibonacci
     
-    // Find smallest Fibonacci >= n
     while (fibM < n) {
-      fibM2 = fibM1;
-      fibM1 = fibM;
-      fibM = fibM2 + fibM1;
+        fibM2 = fibM1;
+        fibM1 = fibM;
+        fibM = fibM2 + fibM1;
     }
     
     let offset = -1;
-    
     while (fibM > 1) {
-      const i = Math.min(offset + fibM2, n - 1);
-      
-      if (arr[i] < target) {
-        fibM = fibM1;
-        fibM1 = fibM2;
-        fibM2 = fibM - fibM1;
-        offset = i;
-      } else if (arr[i] > target) {
-        fibM = fibM2;
-        fibM1 = fibM1 - fibM2;
-        fibM2 = fibM - fibM1;
-      } else {
-        return i;
-      }
+        let i = Math.min(offset + fibM2, n - 1);
+        if (arr[i] < target) {
+            fibM = fibM1;
+            fibM1 = fibM2;
+            fibM2 = fibM - fibM1;
+            offset = i;
+        } else if (arr[i] > target) {
+            fibM = fibM2;
+            fibM1 = fibM1 - fibM2;
+            fibM2 = fibM - fibM1;
+        } else return i;
     }
-    
-    if (fibM1 && offset + 1 < n && arr[offset + 1] === target) {
-      return offset + 1;
-    }
-    
+    if (fibM1 && arr[offset + 1] === target) return offset + 1;
     return -1;
-  }
-  
-  // Time Complexity: O(log n)
-  // Space Complexity: O(1)`,
+}
+// Time Complexity: O(log n)`,
 		python: `def fibonacci_search(arr, target):
-      n = len(arr)
-      
-      # Initialize Fibonacci numbers
-      fib_m2 = 0  # (m-2)'th Fibonacci
-      fib_m1 = 1  # (m-1)'th Fibonacci
-      fib_m = fib_m2 + fib_m1  # m'th Fibonacci
-      
-      # Find smallest Fibonacci >= n
-      while fib_m < n:
-          fib_m2 = fib_m1
-          fib_m1 = fib_m
-          fib_m = fib_m2 + fib_m1
-      
-      offset = -1
-      
-      while fib_m > 1:
-          i = min(offset + fib_m2, n - 1)
-          
-          if arr[i] < target:
-              fib_m = fib_m1
-              fib_m1 = fib_m2
-              fib_m2 = fib_m - fib_m1
-              offset = i
-          elif arr[i] > target:
-              fib_m = fib_m2
-              fib_m1 = fib_m1 - fib_m2
-              fib_m2 = fib_m - fib_m1
-          else:
-              return i
-      
-      if fib_m1 and offset + 1 < n and arr[offset + 1] == target:
-          return offset + 1
-      
-      return -1
-  
-  # Time Complexity: O(log n)
-  # Space Complexity: O(1)`,
+    n = len(arr)
+    fibM2 = 0
+    fibM1 = 1
+    fibM = fibM2 + fibM1
+    
+    while fibM < n:
+        fibM2 = fibM1
+        fibM1 = fibM
+        fibM = fibM2 + fibM1
+        
+    offset = -1
+    while fibM > 1:
+        i = min(offset + fibM2, n - 1)
+        if arr[i] < target:
+            fibM = fibM1
+            fibM1 = fibM2
+            fibM2 = fibM - fibM1
+            offset = i
+        elif arr[i] > target:
+            fibM = fibM2
+            fibM1 = fibM1 - fibM2
+            fibM2 = fibM - fibM1
+        else:
+            return i
+            
+    if fibM1 and arr[offset + 1] == target:
+        return offset + 1
+    return -1
+# Time Complexity: O(log n)`,
 		java: `public static int fibonacciSearch(int[] arr, int target) {
-      int n = arr.length;
-      
-      // Initialize Fibonacci numbers
-      int fibM2 = 0; // (m-2)'th Fibonacci
-      int fibM1 = 1; // (m-1)'th Fibonacci
-      int fibM = fibM2 + fibM1; // m'th Fibonacci
-      
-      // Find smallest Fibonacci >= n
-      while (fibM < n) {
-          fibM2 = fibM1;
-          fibM1 = fibM;
-          fibM = fibM2 + fibM1;
-      }
-      
-      int offset = -1;
-      
-      while (fibM > 1) {
-          int i = Math.min(offset + fibM2, n - 1);
-          
-          if (arr[i] < target) {
-              fibM = fibM1;
-              fibM1 = fibM2;
-              fibM2 = fibM - fibM1;
-              offset = i;
-          } else if (arr[i] > target) {
-              fibM = fibM2;
-              fibM1 = fibM1 - fibM2;
-              fibM2 = fibM - fibM1;
-          } else {
-              return i;
-          }
-      }
-      
-      if (fibM1 == 1 && offset + 1 < n && arr[offset + 1] == target) {
-          return offset + 1;
-      }
-      
-      return -1;
-  }
-  
-  // Time Complexity: O(log n)
-  // Space Complexity: O(1)`,
-	},
-	"Depth First Search (DFS)": {
-		javascript: `// Graph represented as adjacency list
-  function dfs(graph, start, visited = new Set()) {
-    console.log(start); // Process node
-    visited.add(start);
+    int n = arr.length;
+    int fibM2 = 0;
+    int fibM1 = 1;
+    int fibM = fibM2 + fibM1;
     
-    for (const neighbor of graph[start] || []) {
-      if (!visited.has(neighbor)) {
-        dfs(graph, neighbor, visited);
-      }
+    while (fibM < n) {
+        fibM2 = fibM1;
+        fibM1 = fibM;
+        fibM = fibM2 + fibM1;
     }
     
-    return visited;
-  }
-  
-  // Iterative DFS using stack
-  function dfsIterative(graph, start) {
-    const visited = new Set();
-    const stack = [start];
-    
-    while (stack.length > 0) {
-      const node = stack.pop();
-      
-      if (!visited.has(node)) {
-        console.log(node); // Process node
-        visited.add(node);
-        
-        // Add neighbors to stack
-        for (const neighbor of graph[node] || []) {
-          if (!visited.has(neighbor)) {
-            stack.push(neighbor);
-          }
-        }
-      }
+    int offset = -1;
+    while (fibM > 1) {
+        int i = Math.min(offset + fibM2, n - 1);
+        if (arr[i] < target) {
+            fibM = fibM1;
+            fibM1 = fibM2;
+            fibM2 = fibM - fibM1;
+            offset = i;
+        } else if (arr[i] > target) {
+            fibM = fibM2;
+            fibM1 = fibM1 - fibM2;
+            fibM2 = fibM - fibM1;
+        } else return i;
     }
-    
-    return visited;
-  }
-  
-  // Time Complexity: O(V + E)
-  // Space Complexity: O(V)`,
-		python: `# Graph represented as adjacency list
-  def dfs(graph, start, visited=None):
-      if visited is None:
-          visited = set()
-      
-      print(start)  # Process node
-      visited.add(start)
-      
-      for neighbor in graph.get(start, []):
-          if neighbor not in visited:
-              dfs(graph, neighbor, visited)
-      
-      return visited
-  
-  # Iterative DFS using stack
-  def dfs_iterative(graph, start):
-      visited = set()
-      stack = [start]
-      
-      while stack:
-          node = stack.pop()
-          
-          if node not in visited:
-              print(node)  # Process node
-              visited.add(node)
-              
-              # Add neighbors to stack
-              for neighbor in graph.get(node, []):
-                  if neighbor not in visited:
-                      stack.append(neighbor)
-      
-      return visited
-  
-  # Time Complexity: O(V + E)
-  # Space Complexity: O(V)`,
-		java: `// Graph represented as adjacency list
-  public static void dfs(Map<Integer, List<Integer>> graph, 
-                        int start, Set<Integer> visited) {
-      System.out.println(start); // Process node
-      visited.add(start);
-      
-      for (int neighbor : graph.getOrDefault(start, new ArrayList<>())) {
-          if (!visited.contains(neighbor)) {
-              dfs(graph, neighbor, visited);
-          }
-      }
-  }
-  
-  // Iterative DFS using stack
-  public static void dfsIterative(Map<Integer, List<Integer>> graph, 
-                                 int start) {
-      Set<Integer> visited = new HashSet<>();
-      Stack<Integer> stack = new Stack<>();
-      stack.push(start);
-      
-      while (!stack.isEmpty()) {
-          int node = stack.pop();
-          
-          if (!visited.contains(node)) {
-              System.out.println(node); // Process node
-              visited.add(node);
-              
-              // Add neighbors to stack
-              for (int neighbor : graph.getOrDefault(node, new ArrayList<>())) {
-                  if (!visited.contains(neighbor)) {
-                      stack.push(neighbor);
-                  }
-              }
-          }
-      }
-  }
-  
-  // Time Complexity: O(V + E)
-  // Space Complexity: O(V)`,
-	},
-	"Breadth First Search (BFS)": {
-		javascript: `// Graph represented as adjacency list
-  function bfs(graph, start) {
-    const visited = new Set();
-    const queue = [start];
-    visited.add(start);
-    
-    while (queue.length > 0) {
-      const node = queue.shift();
-      console.log(node); // Process node
-      
-      for (const neighbor of graph[node] || []) {
-        if (!visited.has(neighbor)) {
-          visited.add(neighbor);
-          queue.push(neighbor);
-        }
-      }
-    }
-    
-    return visited;
-  }
-  
-  // BFS with level tracking
-  function bfsWithLevels(graph, start) {
-    const visited = new Set();
-    const queue = [[start, 0]]; // [node, level]
-    visited.add(start);
-    
-    while (queue.length > 0) {
-      const [node, level] = queue.shift();
-      console.log(\`Node \${node} at level \${level}\`);
-      
-      for (const neighbor of graph[node] || []) {
-        if (!visited.has(neighbor)) {
-          visited.add(neighbor);
-          queue.push([neighbor, level + 1]);
-        }
-      }
-    }
-  }
-  
-  // Time Complexity: O(V + E)
-  // Space Complexity: O(V)`,
-		python: `from collections import deque
-  
-  # Graph represented as adjacency list
-  def bfs(graph, start):
-      visited = set()
-      queue = deque([start])
-      visited.add(start)
-      
-      while queue:
-          node = queue.popleft()
-          print(node)  # Process node
-          
-          for neighbor in graph.get(node, []):
-              if neighbor not in visited:
-                  visited.add(neighbor)
-                  queue.append(neighbor)
-      
-      return visited
-  
-  # BFS with level tracking
-  def bfs_with_levels(graph, start):
-      visited = set()
-      queue = deque([(start, 0)])  # (node, level)
-      visited.add(start)
-      
-      while queue:
-          node, level = queue.popleft()
-          print(f"Node {node} at level {level}")
-          
-          for neighbor in graph.get(node, []):
-              if neighbor not in visited:
-                  visited.add(neighbor)
-                  queue.append((neighbor, level + 1))
-  
-  # Time Complexity: O(V + E)
-  // Space Complexity: O(V)`,
-		java: `// Graph represented as adjacency list
-  public static void bfs(Map<Integer, List<Integer>> graph, int start) {
-      Set<Integer> visited = new HashSet<>();
-      Queue<Integer> queue = new LinkedList<>();
-      
-      queue.offer(start);
-      visited.add(start);
-      
-      while (!queue.isEmpty()) {
-          int node = queue.poll();
-          System.out.println(node); // Process node
-          
-          for (int neighbor : graph.getOrDefault(node, new ArrayList<>())) {
-              if (!visited.contains(neighbor)) {
-                  visited.add(neighbor);
-                  queue.offer(neighbor);
-              }
-          }
-      }
-  }
-  
-  // BFS with level tracking
-  public static void bfsWithLevels(Map<Integer, List<Integer>> graph, 
-                                   int start) {
-      Set<Integer> visited = new HashSet<>();
-      Queue<int[]> queue = new LinkedList<>(); // [node, level]
-      
-      queue.offer(new int[]{start, 0});
-      visited.add(start);
-      
-      while (!queue.isEmpty()) {
-          int[] current = queue.poll();
-          int node = current[0];
-          int level = current[1];
-          
-          System.out.println("Node " + node + " at level " + level);
-          
-          for (int neighbor : graph.getOrDefault(node, new ArrayList<>())) {
-              if (!visited.contains(neighbor)) {
-                  visited.add(neighbor);
-                  queue.offer(new int[]{neighbor, level + 1});
-              }
-          }
-      }
-  }
-  
-  // Time Complexity: O(V + E)
-  // Space Complexity: O(V)`,
-	},
-	"Dijkstra's Algorithm": {
-		javascript: `function dijkstra(graph, start) {
-    const distances = {};
-    const visited = new Set();
-    const pq = [[0, start]]; // [distance, node]
-    
-    // Initialize distances
-    for (const node in graph) {
-      distances[node] = Infinity;
-    }
-    distances[start] = 0;
-    
-    while (pq.length > 0) {
-      // Sort to get minimum distance
-      pq.sort((a, b) => a[0] - b[0]);
-      const [currentDist, currentNode] = pq.shift();
-      
-      if (visited.has(currentNode)) continue;
-      visited.add(currentNode);
-      
-      // Update distances to neighbors
-      for (const [neighbor, weight] of graph[currentNode] || []) {
-        const distance = currentDist + weight;
-        
-        if (distance < distances[neighbor]) {
-          distances[neighbor] = distance;
-          pq.push([distance, neighbor]);
-        }
-      }
-    }
-    
-    return distances;
-  }
-  
-  // Example graph: {node: [[neighbor, weight], ...]}
-  // const graph = {
-  //   'A': [['B', 4], ['C', 2]],
-  //   'B': [['C', 1], ['D', 5]],
-  //   'C': [['D', 8]],
-  //   'D': []
-  // };
-  
-  // Time Complexity: O((V + E) log V) with priority queue
-  // Space Complexity: O(V)`,
-		python: `import heapq
-  
-  def dijkstra(graph, start):
-      distances = {node: float('inf') for node in graph}
-      distances[start] = 0
-      visited = set()
-      pq = [(0, start)]  # (distance, node)
-      
-      while pq:
-          current_dist, current_node = heapq.heappop(pq)
-          
-          if current_node in visited:
-              continue
-          visited.add(current_node)
-          
-          # Update distances to neighbors
-          for neighbor, weight in graph.get(current_node, []):
-              distance = current_dist + weight
-              
-              if distance < distances[neighbor]:
-                  distances[neighbor] = distance
-                  heapq.heappush(pq, (distance, neighbor))
-      
-      return distances
-  
-  # Example graph: {node: [(neighbor, weight), ...]}
-  # graph = {
-  #     'A': [('B', 4), ('C', 2)],
-  #     'B': [('C', 1), ('D', 5)],
-  #     'C': [('D', 8)],
-  #     'D': []
-  # }
-  
-  # Time Complexity: O((V + E) log V) with priority queue
-  # Space Complexity: O(V)`,
-		java: `public static Map<String, Integer> dijkstra(
-      Map<String, List<int[]>> graph, String start) {
-      
-      Map<String, Integer> distances = new HashMap<>();
-      Set<String> visited = new HashSet<>();
-      PriorityQueue<int[]> pq = new PriorityQueue<>(
-          Comparator.comparingInt(a -> a[0])
-      ); // [distance, node_hash]
-      
-      // Initialize distances
-      for (String node : graph.keySet()) {
-          distances.put(node, Integer.MAX_VALUE);
-      }
-      distances.put(start, 0);
-      // For simplicity, assuming node names can be hashed to integers for the PQ.
-      // In a real-world scenario, you'd map node names to unique integers or use
-      // a custom class in the PriorityQueue.
-      pq.offer(new int[]{0, start.hashCode()}); 
-      
-      // Placeholder for mapping hashcode back to node string. This requires
-      // maintaining a separate map or using integer IDs for nodes.
-      Map<Integer, String> nodeMap = new HashMap<>();
-      for(String node : graph.keySet()) {
-          nodeMap.put(node.hashCode(), node);
-      }
-      
-      while (!pq.isEmpty()) {
-          int[] current = pq.poll();
-          int currentDist = current[0];
-          String currentNode = nodeMap.get(current[1]); // Retrieve node string from hashcode
-          
-          if (currentNode == null || visited.contains(currentNode)) continue;
-          visited.add(currentNode);
-          
-          // Update distances to neighbors
-          for (int[] edge : graph.getOrDefault(currentNode, new ArrayList<>())) {
-              String neighbor = nodeMap.get(edge[0]); // Assuming edge[0] is neighbor's hashcode
-              int weight = edge[1];
-              
-              if (neighbor == null) continue; // Skip if neighbor not found in map
-  
-              int distance = currentDist + weight;
-              
-              if (distance < distances.get(neighbor)) {
-                  distances.put(neighbor, distance);
-                  pq.offer(new int[]{distance, neighbor.hashCode()});
-              }
-          }
-      }
-      
-      return distances;
-  }
-  
-  // Time Complexity: O((V + E) log V) with priority queue
-  // Space Complexity: O(V)`,
-	},
-	"A* Search": {
-		javascript: `function astar(graph, start, goal, heuristic) {
-    const openSet = [[0, start]]; // [f_score, node]
-    const cameFrom = {};
-    const gScore = { [start]: 0 };
-    const fScore = { [start]: heuristic(start, goal) };
-    
-    while (openSet.length > 0) {
-      // Sort by f_score
-      openSet.sort((a, b) => a[0] - b[0]);
-      const [, current] = openSet.shift();
-      
-      if (current === goal) {
-        return reconstructPath(cameFrom, current);
-      }
-      
-      for (const [neighbor, cost] of graph[current] || []) {
-        const tentativeGScore = gScore[current] + cost;
-        
-        if (!(neighbor in gScore) || tentativeGScore < gScore[neighbor]) {
-          cameFrom[neighbor] = current;
-          gScore[neighbor] = tentativeGScore;
-          fScore[neighbor] = tentativeGScore + heuristic(neighbor, goal);
-          
-          if (!openSet.some(([, node]) => node === neighbor)) {
-            openSet.push([fScore[neighbor], neighbor]);
-          }
-        }
-      }
-    }
-    
-    return null; // No path found
-  }
-  
-  function reconstructPath(cameFrom, current) {
-    const path = [current];
-    while (current in cameFrom) {
-      current = cameFrom[current];
-      path.unshift(current);
-    }
-    return path;
-  }
-  
-  // Example heuristic (Manhattan distance for grid)
-  function manhattanDistance(node, goal) {
-    return Math.abs(node[0] - goal[0]) + Math.abs(node[1] - goal[1]);
-  }
-  
-  // Time Complexity: O((V + E) log V)
-  // Space Complexity: O(V)`,
-		python: `
-  import heapq
-  
-  def astar(graph, start, goal, heuristic):
-      open_set = [(0, start)]  # (f_score, node)
-      came_from = {}
-      g_score = { start: 0 }
-      f_score = { start: heuristic(start, goal) }
-  
-      while open_set:
-          _, current = heapq.heappop(open_set)
-  
-          if current == goal:
-              return reconstruct_path(came_from, current)
-          
-          for neighbor, cost in graph.get(current, []):
-              tentative_g_score = g_score[current] + cost
-              
-              if neighbor not in g_score or tentative_g_score < g_score[neighbor]:
-                  came_from[neighbor] = current
-                  g_score[neighbor] = tentative_g_score
-                  f_score[neighbor] = tentative_g_score + heuristic(neighbor, goal)
-                  
-                  if not any(node == neighbor for _, node in open_set):
-                      heapq.heappush(open_set, (f_score[neighbor], neighbor))
-  
-      return None  # No path found
-  
-  def reconstruct_path(came_from, current):
-      path = [current]
-      while current in came_from:
-          current = came_from[current]
-          path.insert(0, current)
-      return path
-  
-  # Example heuristic (Manhattan distance for grid)
-  def manhattan_distance(node, goal):
-      return abs(node[0] - goal[0]) + abs(node[1] - goal[1])
-  
-  # Time Complexity: O((V + E) log V)
-  # Space Complexity: O(V)`,
-		java: `public static List<String> astar(
-      Map<String, List<int[]>> graph, String start, String goal,
-      BiFunction<String, String, Integer> heuristic) {
-      
-      PriorityQueue<int[]> openSet = new PriorityQueue<>(
-          Comparator.comparingInt(a -> a[0])
-      ); // [f_score, node_hash]
-      
-      Map<String, String> cameFrom = new HashMap<>();
-      Map<String, Integer> gScore = new HashMap<>();
-      Map<String, Integer> fScore = new HashMap<>();
-      
-      gScore.put(start, 0);
-      fScore.put(start, heuristic.apply(start, goal));
-      
-      // Placeholder for mapping hashcode to node string. Requires a separate map.
-      Map<Integer, String> nodeMap = new HashMap<>();
-      for(String node : graph.keySet()) {
-          nodeMap.put(node.hashCode(), node);
-      }
-      // Ensure start node is in map if not in graph keys (e.g., isolated start node)
-      if (!nodeMap.containsKey(start.hashCode())) {
-          nodeMap.put(start.hashCode(), start);
-      }
-  
-      openSet.offer(new int[]{fScore.get(start), start.hashCode()});
-      
-      while (!openSet.isEmpty()) {
-          int[] current = openSet.poll();
-          String currentNode = nodeMap.get(current[1]); // Retrieve node string
-  
-          if (currentNode == null) continue; // Should not happen if map is correct
-  
-          if (currentNode.equals(goal)) {
-              return reconstructPath(cameFrom, currentNode);
-          }
-          
-          for (int[] edge : graph.getOrDefault(currentNode, new ArrayList<>())) {
-              String neighbor = nodeMap.get(edge[0]); // Assuming edge[0] is neighbor's hashcode
-              int cost = edge[1];
-  
-              if (neighbor == null) continue; // Skip if neighbor not found
-              
-              int tentativeGScore = gScore.getOrDefault(currentNode, Integer.MAX_VALUE) + cost;
-              
-              if (!gScore.containsKey(neighbor) || tentativeGScore < gScore.get(neighbor)) {
-                  cameFrom.put(neighbor, currentNode);
-                  gScore.put(neighbor, tentativeGScore);
-                  fScore.put(neighbor, tentativeGScore + heuristic.apply(neighbor, goal));
-                  
-                  // Check if neighbor is already in openSet. If so, update its priority.
-                  // If not, add it. This requires a way to efficiently update or check.
-                  // For simplicity here, we'll add it again if not present (can lead to duplicates, but works).
-                  // A more efficient approach would use a map to track nodes in openSet for updates.
-                  boolean inOpenSet = false;
-                  for(int[] item : openSet) {
-                      if (nodeMap.get(item[1]).equals(neighbor)) {
-                          inOpenSet = true;
-                          // Update priority if needed (more complex in Java PriorityQueue)
-                          break;
-                      }
-                  }
-                  if (!inOpenSet) {
-                      openSet.offer(new int[]{fScore.get(neighbor), neighbor.hashCode()});
-                  }
-              }
-          }
-      }
-      
-      return null; // No path found
-  }
-  
-  private static List<String> reconstructPath(Map<String, String> cameFrom, String current) {
-      List<String> path = new LinkedList<>();
-      while (current != null) {
-          path.add(0, current);
-          current = cameFrom.get(current);
-      }
-      return path;
-  }
-  
-  // Time Complexity: O((V + E) log V)
-  // Space Complexity: O(V)`,
-	},
-	"Uniform Cost Search": {
-		javascript: `function uniformCostSearch(graph, start, goal) {
-    const pq = [[0, start, [start]]]; // [cost, node, path]
-    const visited = new Set();
-    
-    while (pq.length > 0) {
-      // Sort by cost
-      pq.sort((a, b) => a[0] - b[0]);
-      const [cost, node, path] = pq.shift();
-      
-      if (node === goal) {
-        return { cost, path };
-      }
-      
-      if (visited.has(node)) continue;
-      visited.add(node);
-      
-      for (const [neighbor, edgeCost] of graph[node] || []) {
-        if (!visited.has(neighbor)) {
-          const newCost = cost + edgeCost;
-          const newPath = [...path, neighbor];
-          pq.push([newCost, neighbor, newPath]);
-        }
-      }
-    }
-    
-    return null; // No path found
-  }
-  
-  // Example graph: {node: [[neighbor, cost], ...]}
-  // Time Complexity: O((V + E) log V)
-  // Space Complexity: O(V)`,
-		python: `import heapq
-  
-  def uniform_cost_search(graph, start, goal):
-      pq = [(0, start, [start])]  # (cost, node, path)
-      visited = set()
-      
-      while pq:
-          cost, node, path = heapq.heappop(pq)
-          
-          if node == goal:
-              return {'cost': cost, 'path': path}
-          
-          if node in visited:
-              continue
-          visited.add(node)
-          
-          for neighbor, edge_cost in graph.get(node, []):
-              if neighbor not in visited:
-                  new_cost = cost + edge_cost
-                  new_path = path + [neighbor]
-                  heapq.heappush(pq, (new_cost, neighbor, new_path))
-      
-      return None  # No path found
-  
-  # Example graph: {node: [(neighbor, cost), ...]}
-  # Time Complexity: O((V + E) log V)
-  # Space Complexity: O(V)`,
-		java: `public static Map<String, Object> uniformCostSearch(
-      Map<String, List<int[]>> graph, String start, String goal) {
-      
-      PriorityQueue<Object[]> pq = new PriorityQueue<>(
-          Comparator.comparingInt(a -> (int)a[0])
-      ); // [cost, node, path]
-      
-      Set<String> visited = new HashSet<>();
-      List<String> initialPath = new ArrayList<>();
-      initialPath.add(start);
-      pq.offer(new Object[]{0, start, initialPath});
-      
-      while (!pq.isEmpty()) {
-          Object[] current = pq.poll();
-          int cost = (int) current[0];
-          String node = (String) current[1];
-          List<String> path = (List<String>) current[2];
-          
-          if (node.equals(goal)) {
-              Map<String, Object> result = new HashMap<>();
-              result.put("cost", cost);
-              result.put("path", path);
-              return result;
-          }
-          
-          if (visited.contains(node)) continue;
-          visited.add(node);
-          
-          for (int[] edge : graph.getOrDefault(node, new ArrayList<>())) {
-              // Assuming edge[0] represents the neighbor node's identifier (e.g., its name as a string)
-              String neighbor = String.valueOf(edge[0]); 
-              int edgeCost = edge[1];
-              
-              if (!visited.contains(neighbor)) {
-                  int newCost = cost + edgeCost;
-                  List<String> newPath = new ArrayList<>(path);
-                  newPath.add(neighbor);
-                  pq.offer(new Object[]{newCost, neighbor, newPath});
-              }
-          }
-      }
-      
-      return null; // No path found
-  }
-  
-  // Time Complexity: O((V + E) log V)
-  // Space Complexity: O(V)`,
-	},
-	"Prim's Algorithm": {
-		javascript: `function primsAlgorithm(graph, numNodes) {
-    const visited = new Set([0]); // Start from node 0
-    const mst = [];
-    let totalCost = 0;
-    
-    while (visited.size < numNodes) {
-      let minEdge = null;
-      let minWeight = Infinity;
-      
-      // Find minimum weight edge connecting visited to unvisited
-      for (const edge of graph) {
-        const fromVisited = visited.has(edge.from);
-        const toVisited = visited.has(edge.to);
-        
-        if ((fromVisited && !toVisited) || (toVisited && !fromVisited)) {
-          if (edge.weight < minWeight) {
-            minEdge = edge;
-            minWeight = edge.weight;
-          }
-        }
-      }
-      
-      if (minEdge) {
-        mst.push(minEdge);
-        visited.add(minEdge.from);
-        visited.add(minEdge.to);
-        totalCost += minEdge.weight;
-      }
-    }
-    
-    return { mst, totalCost };
-  }
-  
-  // Time Complexity: O((V+E) log V) with priority queue
-  // Space Complexity: O(V)`,
-		python: `
-  import heapq
-  
-  def prims_algorithm(graph, num_nodes):
-      visited = set()
-      # Add node 0 to visited set initially
-      visited.add(0) 
-      mst = []
-      total_cost = 0
-      edges = []
-  
-      # Add all edges from node 0 to the priority queue
-      for edge in graph:
-          if edge['from'] == 0 or edge["to"] == 0:
-              heapq.heappush(edges, (edge['weight'], edge))
-  
-      while len(visited) < num_nodes and edges:
-          weight, edge = heapq.heappop(edges)
-  
-          from_visited = edge["from"] in visited
-          to_visited = edge["to"] in visited
-  
-          if from_visited and not to_visited:
-              mst.append(edge)
-              visited.add(edge["to"])
-              total_cost += weight
-              # Add new edges from the newly visited node
-              for e in graph:
-                  if e['from'] == edge['to'] or e["to"] == edge['to']:
-                      if (e['from'] not in visited) or (e['to'] not in visited):
-                          heapq.heappush(edges, (e['weight'], e))
-          
-          elif to_visited and not from_visited:
-              mst.append(edge)
-              visited.add(edge['from'])
-              total_cost += weight
-              # Add new edges from the newly visited node
-              for e in graph:
-                  if e['from'] == edge['from'] or e["to"] == edge['from']:
-                      if (e['from'] not in visited) or (e['to'] not in visited):
-                          heapq.heappush(edges, (e['weight'], e))
-  
-      return mst, total_cost
-  
-  # Time Complexity: O((V+E) log V)
-  # Space Complexity: O(V)`,
-		java: `
-      import java.util.*;
-  
-      public class PrimsAlgorithm {
-        static class Edge {
-          int from, to, weight;
-          Edge(int from, int to, int weight) {
-                  this.from = from;
-                  this.to = to;
-                  this.weight = weight;
-              }
-        }
-  
-        public static List<Edge> primsAlgorithm(List<Edge> graph, int numNodes) {
-          Set<Integer> visited = new HashSet<>();
-          visited.add(0); // Start from node 0
-          List<Edge> mst = new ArrayList<>();
-          int totalCost = 0;
-  
-          // Using a priority queue to efficiently find the minimum weight edge
-          PriorityQueue<Edge> pq = new PriorityQueue<>(Comparator.comparingInt(e -> e.weight));
-  
-          // Add all edges connected to the starting node (node 0)
-          for (Edge edge : graph) {
-              if (edge.from == 0 || edge.to == 0) {
-                  pq.offer(edge);
-              }
-          }
-  
-          while (visited.size() < numNodes && !pq.isEmpty()) {
-              Edge minEdge = pq.poll();
-              
-              int from = minEdge.from;
-              int to = minEdge.to;
-              int weight = minEdge.weight;
-  
-              // Determine which node is not yet visited
-              int nextNode = -1;
-              if (visited.contains(from) && !visited.contains(to)) {
-                  nextNode = to;
-              } else if (!visited.contains(from) && visited.contains(to)) {
-                  nextNode = from;
-              }
-  
-              if (nextNode != -1) {
-                  mst.add(minEdge);
-                  visited.add(nextNode);
-                  totalCost += weight;
-  
-                  // Add new edges connected to the newly visited node
-                  for (Edge edge : graph) {
-                      if ((edge.from == nextNode && !visited.contains(edge.to)) || 
-                          (edge.to == nextNode && !visited.contains(edge.from))) {
-                          pq.offer(edge);
-                      }
-                  }
-              }
-          }
-          
-          // If MST is not fully formed (e.g., disconnected graph)
-          if (visited.size() < numNodes) {
-              // Handle this case, e.g., return null or throw an exception
-              return null; 
-          }
-  
-          return mst;
-      }
-  }
-  
-  // Time Complexity: O((V+E) log V)
-  // Space Complexity: O(V)`,
-	},
-	"Kruskal's Algorithm": {
-		javascript: `class UnionFind {
-    constructor(size) {
-      this.parent = Array.from({ length: size }, (_, i) => i);
-      this.rank = Array(size).fill(0);
-    }
-    
-    find(x) {
-      if (this.parent[x] !== x) {
-        this.parent[x] = this.find(this.parent[x]);
-      }
-      return this.parent[x];
-    }
-    
-    union(x, y) {
-      const rootX = this.find(x);
-      const rootY = this.find(y);
-      
-      if (rootX === rootY) return false;
-      
-      if (this.rank[rootX] < this.rank[rootY]) {
-        this.parent[rootX] = rootY;
-      } else if (this.rank[rootX] > this.rank[rootY]) {
-        this.parent[rootY] = rootX;
-      } else {
-        this.parent[rootY] = rootX;
-        this.rank[rootX]++;
-      }
-      
-      return true;
-    }
-  }
-  
-  function kruskalsAlgorithm(edges, numNodes) {
-    // Sort edges by weight
-    edges.sort((a, b) => a.weight - b.weight);
-    
-    const uf = new UnionFind(numNodes);
-    const mst = [];
-    let totalCost = 0;
-    
-    for (const edge of edges) {
-      // If adding edge doesn't create cycle
-      if (uf.union(edge.from, edge.to)) {
-        mst.push(edge);
-        totalCost += edge.weight;
-        
-        // Stop if we have V-1 edges
-        if (mst.length === numNodes - 1) break;
-      }
-    }
-    
-    return { mst, totalCost };
-  }
-  
-  // Time Complexity: O(E log E) or O(E log V)
-  // Space Complexity: O(V)`,
-		python: `
-  class UnionFind:
-      def __init__(self, size):
-          self.parent = list(range(size))
-          self.rank = [0] * size
-      
-      def find(self, x):
-          if self.parent[x] != x:
-              self.parent[x] = self.find(self.parent[x])
-          return self.parent[x]
-      
-      def union(self, x, y):
-          root_x = self.find(x)
-          root_y = self.find(y)
-          
-          if root_x == root_y:
-              return False
-          
-          if self.rank[root_x] < self.rank[root_y]:
-              self.parent[root_x] = root_y
-          elif self.rank[root_x] > self.rank[root_y]:
-              self.parent[root_y] = root_x
-          else:
-              self.parent[root_y] = root_x
-              self.rank[root_x] += 1
-          
-          return True
-  
-  def kruskals_algorithm(edges, num_nodes):
-      # Sort edges by weight
-      edges.sort(key=lambda e: e['weight'])
-      
-      uf = UnionFind(num_nodes)
-      mst = []
-      total_cost = 0
-      
-      for edge in edges:
-          # If adding edge doesn't create cycle
-          if uf.union(edge['from'], edge['to']):
-              mst.append(edge)
-              total_cost += edge['weight']
-              
-              # Stop if we have V-1 edges
-              if len(mst) == num_nodes - 1:
-                  break
-      
-      return mst, total_cost
-  
-  # Time Complexity: O(E log E) or O(E log V)
-  # Space Complexity: O(V)`,
-		java: `class UnionFind {
-      private int[] parent;
-      private int[] rank;
-      
-      public UnionFind(int size) {
-          parent = new int[size];
-          rank = new int[size];
-          for (int i = 0; i < size; i++) {
-              parent[i] = i;
-          }
-      }
-      
-      public int find(int x) {
-          if (parent[x] != x) {
-              parent[x] = find(parent[x]);
-          }
-          return parent[x];
-      }
-      
-      public boolean union(int x, int y) {
-          int rootX = find(x);
-          int rootY = find(y);
-          
-          if (rootX == rootY) return false;
-          
-          if (rank[rootX] < rank[rootY]) {
-              parent[rootX] = rootY;
-          } else if (rank[rootX] > rank[rootY]) {
-              parent[rootY] = rootX;
-          } else {
-              parent[rootY] = rootX;
-              rank[rootX]++;
-          }
-          
-          return true;
-      }
-  }
-  
-  public class KruskalsAlgorithm {
-      static class Edge implements Comparable<Edge> {
-          int from, to, weight;
-          
-          public Edge(int from, int to, int weight) {
-              this.from = from;
-              this.to = to;
-              this.weight = weight;
-          }
-          
-          public int compareTo(Edge other) {
-              return this.weight - other.weight;
-          }
-      }
-      
-      public static List<Edge> kruskalsAlgorithm(List<Edge> edges, int numNodes) {
-          Collections.sort(edges);
-          
-          UnionFind uf = new UnionFind(numNodes);
-          List<Edge> mst = new ArrayList<>();
-          int totalCost = 0;
-          
-          for (Edge edge : edges) {
-              if (uf.union(edge.from, edge.to)) {
-                  mst.add(edge);
-                  totalCost += edge.weight;
-                  
-                  if (mst.size() == numNodes - 1) break;
-              }
-          }
-          
-          return mst;
-      }
-  }
-  
-  // Time Complexity: O(E log E)
-  // Space Complexity: O(V)`,
-	},
-	"N-Queens Problem": {
-		javascript: `function solveNQueens(n) {
-    const board = Array.from({ length: n }, () => Array(n).fill('.'));
-    const solutions = [];
-    
-    function isSafe(row, col) {
-      // Check row
-      for (let i = 0; i < col; i++) {
-        if (board[row][i] === 'Q') return false;
-      }
-      
-      // Check upper diagonal
-      for (let i = row, j = col; i >= 0 && j >= 0; i--, j--) {
-        if (board[i][j] === 'Q') return false;
-      }
-      
-      // Check lower diagonal
-      for (let i = row, j = col; i < n && j >= 0; i++, j--) {
-        if (board[i][j] === 'Q') return false;
-      }
-      
-      return true;
-    }
-    
-    function solve(col) {
-      // Base case: all queens placed
-      if (col >= n) {
-        solutions.push(board.map(row => row.join('')));
-        return;
-      }
-      
-      // Try placing queen in each row
-      for (let row = 0; row < n; row++) {
-        if (isSafe(row, col)) {
-          board[row][col] = 'Q';
-          solve(col + 1);
-          board[row][col] = '.'; // Backtrack
-        }
-      }
-    }
-    
-    solve(0);
-    return solutions;
-  }
-  
-  // Time Complexity: O(n!)
-  // Space Complexity: O(n²)`,
-		python: `def solve_n_queens(n):
-      board = [['.' for _ in range(n)] for _ in range(n)]
-      solutions = []
-      
-      def is_safe(row, col):
-          # Check row
-          for i in range(col):
-              if board[row][i] == 'Q':
-                  return False
-  
-          # Check upper diagonal
-          i, j = row, col
-          while i >= 0 and j >= 0:
-              if board[i][j] == 'Q':
-                  return False
-              i -= 1
-              j -= 1
-  
-          # Check lower diagonal
-          i, j = row, col
-          while i < n and j >= 0:
-              if board[i][j] == 'Q':
-                  return False
-              i += 1
-              j -= 1
-  
-          return True
-  
-      def solve(col):
-          # Base case: all queens placed
-          if col >= n:
-              solutions.append([''.join(row) for row in board])
-              return
-  
-          # Try placing queen in each row
-          for row in range(n):
-              if is_safe(row, col):
-                  board[row][col] = 'Q'
-                  solve(col + 1)
-                  board[row][col] = '.'  # Backtrack
-      
-      solve(0)
-      return solutions
-  
-  # Time Complexity: O(n!)
-  # Space Complexity: O(n²)`,
-		java: `
-      import java.util.*;
-  
-      public class NQueens {
-        public static List<List<String>> solveNQueens(int n) {
-          char[][] board = new char[n][n];
-          for (int i = 0; i < n; i++) 
-              Arrays.fill(board[i], '.');
-          
-          List<List<String>> solutions = new ArrayList<>();
-          solve(board, 0, solutions);
-          return solutions;
-      }
-  
-        private static boolean isSafe(char[][] board, int row, int col, int n) {
-          // Check row
-          for (int i = 0; i < col; i++) 
-              if (board[row][i] == 'Q') return false;
-          
-          // Check upper diagonal
-          for (int i = row, j = col; i >= 0 && j >= 0; i--, j--) 
-              if (board[i][j] == 'Q') return false;
-          
-          // Check lower diagonal
-          for (int i = row, j = col; i < n && j >= 0; i++, j--) 
-              if (board[i][j] == 'Q') return false;
-          
-          return true;
-      }
-  
-        private static void solve(char[][] board, int col, List<List<String>> solutions) {
-          int n = board.length;
-          
-          if (col >= n) {
-              List<String> solution = new ArrayList<>();
-              for (char[] row : board) 
-                  solution.add(new String(row));
-              solutions.add(solution);
-              return;
-          }
-          
-          for (int row = 0; row < n; row++) 
-              if (isSafe(board, row, col, n)) {
-                  board[row][col] = 'Q';
-                  solve(board, col + 1, solutions);
-                  board[row][col] = '.';
-              }
-      }
-      }
-  
-      // Time Complexity: O(n!)
-      // Space Complexity: O(n²)`,
-	},
-	"Sudoku Solver": {
-		javascript: `function solveSudoku(board) {
-    function isValid(row, col, num) {
-      // Check row
-      for (let i = 0; i < 9; i++) {
-        if (board[row][i] === num) return false;
-      }
-      
-      // Check column
-      for (let i = 0; i < 9; i++) {
-        if (board[i][col] === num) return false;
-      }
-      
-      // Check 3x3 box
-      const boxRow = Math.floor(row / 3) * 3;
-      const boxCol = Math.floor(col / 3) * 3;
-      for (let i = 0; i < 3; i++) {
-        for (let j = 0; j < 3; j++) {
-          if (board[boxRow + i][boxCol + j] === num) return false;
-        }
-      }
-      
-      return true;
-    }
-    
-    function solve() {
-      for (let row = 0; row < 9; row++) {
-        for (let col = 0; col < 9; col++) {
-          if (board[row][col] === 0) {
-            for (let num = 1; num <= 9; num++) {
-              if (isValid(row, col, num)) {
-                board[row][col] = num;
-                
-                if (solve()) return true;
-                
-                board[row][col] = 0; // Backtrack
-              }
-            }
-            return false;
-          }
-        }
-      }
-      return true;
-    }
-    
-    solve();
-    return board;
-  }
-  
-  // Time Complexity: O(9^(n*n)) worst case
-  // Space Complexity: O(n*n)`,
-		python: `def solve_sudoku(board):
-      def is_valid(row, col, num):
-          # Check row
-          if num in board[row]:
-              return False
-  
-          # Check column
-          if num in [board[i][col] for i in range(9)]:
-              return False
-  
-          # Check 3x3 box
-          box_row, box_col = (row // 3) * 3, (col // 3) * 3
-          for i in range(3):
-              for j in range(3):
-                  if board[box_row + i][box_col + j] == num:
-                      return False
-  
-          return True
-  
-      def solve():
-          for row in range(9):
-              for col in range(9):
-                  if board[row][col] == 0:
-                      for num in range(1, 10):
-                          if is_valid(row, col, num):
-                              board[row][col] = num
-  
-                              if solve():
-                                  return True
-  
-                              board[row][col] = 0  # Backtrack
-                      return False
-          return True
-  
-      solve()
-      return board
-  
-  # Time Complexity: O(9 ^ (n * n))
-  # Space Complexity: O(n * n)`,
-		java: `
-      public class SudokuSolver {
-        public static boolean solveSudoku(int[][] board) {
-          for (int row = 0; row < 9; row++) 
-              for (int col = 0; col < 9; col++) 
-                  if (board[row][col] == 0) {
-                      for (int num = 1; num <= 9; num++) 
-                          if (isValid(board, row, col, num)) {
-                              board[row][col] = num;
-                              
-                              if (solveSudoku(board)) {
-                                  return true;
-                              }
-                              
-                              board[row][col] = 0; // Backtrack
-                          }
-                      return false;
-                  }
-          return true;
-      }
-  
-        private static boolean isValid(int[][] board, int row, int col, int num) {
-          // Check row
-          for (int i = 0; i < 9; i++) 
-              if (board[row][i] == num) return false;
-          
-          // Check column
-          for (int i = 0; i < 9; i++) 
-              if (board[i][col] == num) return false;
-          
-          // Check 3x3 box
-          int boxRow = (row / 3) * 3;
-          int boxCol = (col / 3) * 3;
-          for (int i = 0; i < 3; i++) 
-              for (int j = 0; j < 3; j++) 
-                  if (board[boxRow + i][boxCol + j] == num) {
-                      return false;
-                  }
-          
-          return true;
-      }
-      }
-  
-      // Time Complexity: O(9^(n*n))
-      // Space Complexity: O(n*n)`,
-	},
-	"0/1 Knapsack": {
-		javascript: `function knapsack(weights, values, capacity) {
-    const n = weights.length;
-    const dp = Array.from({ length: n + 1 }, () => Array(capacity + 1).fill(0));
-    
-    for (let i = 1; i <= n; i++) {
-      for (let w = 0; w <= capacity; w++) {
-        // Don't include current item
-        dp[i][w] = dp[i - 1][w];
-        
-        // Include current item if possible
-        if (weights[i - 1] <= w) {
-          dp[i][w] = Math.max(
-            dp[i][w],
-            values[i - 1] + dp[i - 1][w - weights[i - 1]]
-          );
-        }
-      }
-    }
-    
-    return dp[n][capacity];
-  }
-  
-  // Example usage
-  const weights = [2, 3, 4, 5];
-  const values = [3, 4, 5, 6];
-  const capacity = 10;
-  console.log(knapsack(weights, values, capacity)); // Output: 10
-  
-  // Time Complexity: O(n * W)
-  // Space Complexity: O(n * W)`,
-		python: `def knapsack(weights, values, capacity):
-      n = len(weights)
-      dp = [[0 for _ in range(capacity + 1)] for _ in range(n + 1)]
-  
-      for i in range(1, n + 1):
-          for w in range(capacity + 1):
-              # Don't include current item
-              dp[i][w] = dp[i - 1][w]
-              
-              # Include current item if possible
-              if weights[i - 1] <= w:
-                  dp[i][w] = max(
-                      dp[i][w],
-                      values[i - 1] + dp[i - 1][w - weights[i - 1]]
-                  )
-  
-      return dp[n][capacity]
-  
-  # Example usage
-  weights = [2, 3, 4, 5]
-  values = [3, 4, 5, 6]
-  capacity = 10
-  print(knapsack(weights, values, capacity)) # Output: 10
-  
-  # Time Complexity: O(n * W)
-  # Space Complexity: O(n * W)`,
-		java: `
-      public class Knapsack {
-        public static int knapsack(int[] weights, int[] values, int capacity) {
-          int n = weights.length;
-          int[][] dp = new int[n + 1][capacity + 1];
-          
-          for (int i = 1; i <= n; i++) 
-              for (int w = 0; w <= capacity; w++) 
-                  // Don't include current item
-                  dp[i][w] = dp[i - 1][w];
-                  
-                  // Include current item if possible
-                  if (weights[i - 1] <= w) {
-                      dp[i][w] = Math.max(
-                          dp[i][w],
-                          values[i - 1] + dp[i - 1][w - weights[i - 1]]
-                      );
-                  }
-          
-          return dp[n][capacity];
-      }
-  
-        public static void main(String[] args) {
-          int[] weights = {2, 3, 4, 5};
-          int[] values = {3, 4, 5, 6};
-          int capacity = 10;
-          System.out.println(knapsack(weights, values, capacity)); // 10
-      }
-      }
-  
-      // Time Complexity: O(n * W)
-      // Space Complexity: O(n * W)`,
-	},
-	"Fibonacci Sequence (DP)": {
-		javascript: `function fibonacci(n) {
-    if (n <= 1) return n;
-    
-    const dp = Array(n + 1).fill(0);
-    dp[0] = 0;
-    dp[1] = 1;
-    
-    for (let i = 2; i <= n; i++) {
-      dp[i] = dp[i - 1] + dp[i - 2];
-    }
-    
-    return dp[n];
-  }
-  
-  // Space-optimized version
-  function fibonacciOptimized(n) {
-    if (n <= 1) return n;
-    
-    let prev2 = 0;
-    let prev1 = 1;
-    
-    for (let i = 2; i <= n; i++) {
-      const current = prev1 + prev2;
-      prev2 = prev1;
-      prev1 = current;
-    }
-    
-    return prev1;
-  }
-  
-  // Example
-  console.log(fibonacci(10)); // 55
-  
-  // Time Complexity: O(n)
-  // Space Complexity: O(n) or O(1) optimized`,
-		python: `def fibonacci(n):
-      if n <= 1:
-          return n
-  
-      dp = [0] * (n + 1)
-      dp[0] = 0
-      dp[1] = 1
-  
-      for i in range(2, n + 1):
-          dp[i] = dp[i - 1] + dp[i - 2]
-  
-      return dp[n]
-  
-  # Space-optimized version
-  def fibonacci_optimized(n):
-      if n <= 1:
-          return n
-  
-      prev2 = 0
-      prev1 = 1
-  
-      for i in range(2, n + 1):
-          current = prev1 + prev2
-          prev2 = prev1
-          prev1 = current
-  
-      return prev1
-  
-  # Example
-  print(fibonacci(10)) # 55
-  
-  # Time Complexity: O(n)
-  # Space Complexity: O(n) or O(1) optimized`,
-		java: `
-      public class Fibonacci {
-        public static int fibonacci(int n) {
-          if (n <= 1) return n;
-          
-          int[] dp = new int[n + 1];
-          dp[0] = 0;
-          dp[1] = 1;
-          
-          for (int i = 2; i <= n; i++) 
-              dp[i] = dp[i - 1] + dp[i - 2];
-          
-          return dp[n];
-      }
-  
-        // Space-optimized version
-        public static int fibonacciOptimized(int n) {
-          if (n <= 1) return n;
-          
-          int prev2 = 0;
-          int prev1 = 1;
-          
-          for (int i = 2; i <= n; i++) {
-              int current = prev1 + prev2;
-              prev2 = prev1;
-              prev1 = current;
-          }
-          
-          return prev1;
-      }
-  
-        public static void main(String[] args) {
-          System.out.println(fibonacci(10)); // 55
-      }
-      }
-  
-      // Time Complexity: O(n)
-      // Space Complexity: O(n) or O(1) optimized`,
+    if (fibM1 == 1 && arr[offset + 1] == target) return offset + 1;
+    return -1;
+}
+// Time Complexity: O(log n)`,
 	},
 };
