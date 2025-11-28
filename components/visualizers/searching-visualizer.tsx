@@ -25,26 +25,45 @@ export function SearchingVisualizer({
 	const [target, setTarget] = useState<number>(0);
 	const [comparisons, setComparisons] = useState(0);
 	const [foundIndex, setFoundIndex] = useState<number>(-1);
+	const [searchStatus, setSearchStatus] = useState<
+		"running" | "finished" | "initial"
+	>("initial"); 
+
 	const animationRef = useRef<NodeJS.Timeout | null>(null);
 	const stepsRef = useRef<
 		Array<{ array: ArrayElement[]; comparison?: boolean; found?: number }>
 	>([]);
 	const currentStepRef = useRef(0);
 
-	// Initialization array (sorted for most serach algorithms)
+	// Initialization array (including randomization and sorting fix)
 	useEffect(() => {
-		const newArray = Array.from({ length: 20 }, (_, i) => ({
-			value: (i + 1) * 5,
+		const size = 20;
+		const tempArray = Array.from(
+			{ length: size },
+			() => Math.floor(Math.random() * 950) + 50
+		);
+
+		// Ensure array is always sorted for algorithms that require it
+		if (algorithm !== "Linear Search") {
+			tempArray.sort((a, b) => a - b);
+		}
+
+		const newArray = tempArray.map((value) => ({
+			value,
 			state: "default" as const,
 		}));
-		setArray(newArray);
 
-		// Pick a random target from the array
+		// Pick a target: 70% chance to pick an existing number, 30% chance to pick one just outside the range
 		const randomTarget =
-			newArray[Math.floor(Math.random() * newArray.length)].value;
+			Math.random() < 0.7
+				? newArray[Math.floor(Math.random() * newArray.length)].value
+				: tempArray[0] - 10;
+
+		setArray(newArray);
 		setTarget(randomTarget);
 		setComparisons(0);
 		setFoundIndex(-1);
+		setSearchStatus("initial"); // Reset status
 		currentStepRef.current = 0;
 
 		// Generate steps based on algorithm
@@ -58,6 +77,10 @@ export function SearchingVisualizer({
 	// Animation loop
 	useEffect(() => {
 		if (isPlaying && currentStepRef.current < stepsRef.current.length) {
+			if (currentStepRef.current === 0) {
+				setSearchStatus("running");
+			}
+
 			// Speed 1 = 1000ms delay, Speed 100 = 50ms delay
 			const delay = Math.max(50, 1000 - speed * 9.5);
 
@@ -78,12 +101,17 @@ export function SearchingVisualizer({
 					if (animationRef.current) {
 						clearInterval(animationRef.current);
 					}
+					setSearchStatus("finished"); // Search completed
 					onComplete();
 				}
 			}, delay);
 		} else {
 			if (animationRef.current) {
 				clearInterval(animationRef.current);
+			}
+			// Ensure status is marked as finished if paused or interrupted after starting
+			if (searchStatus === "running") {
+				setSearchStatus("finished");
 			}
 		}
 
@@ -92,30 +120,39 @@ export function SearchingVisualizer({
 				clearInterval(animationRef.current);
 			}
 		};
-	}, [isPlaying, onComplete, speed]); // Added speed to dependency array
+	}, [isPlaying, onComplete, speed, searchStatus]);
 
 	return (
 		<div className="w-full space-y-4 sm:space-y-6">
 			<div className="flex items-center justify-center gap-2 sm:gap-4 lg:gap-6 flex-wrap px-2">
 				<Badge
 					variant="secondary"
-					className="text-xs sm:text-sm px-3 sm:px-4 py-1.5 sm:py-2"
+					className="text-xs sm:text-sm px-3 sm:px-4 py-1.5 sm:py-2 font-black"
 				>
 					Target: {target}
 				</Badge>
 				<Badge
 					variant="secondary"
-					className="text-xs sm:text-sm px-3 sm:px-4 py-1.5 sm:py-2"
+					className="text-xs sm:text-sm px-3 sm:px-4 py-1.5 sm:py-2 font-black"
 				>
 					Comparisons: {comparisons}
 				</Badge>
+				{/* FINAL STATE LOGIC */}
 				<Badge
-					variant={foundIndex !== -1 ? "default" : "destructive"}
-					className="text-xs sm:text-sm px-3 sm:px-4 py-1.5 sm:py-2"
+					variant={
+						foundIndex !== -1
+							? "default"
+							: searchStatus === "finished"
+							? "destructive"
+							: "outline"
+					}
+					className="text-xs sm:text-sm px-3 sm:px-4 py-1.5 sm:py-2 font-black"
 				>
 					{foundIndex !== -1
 						? `Found at index ${foundIndex}`
-						: "Searching..."}
+						: searchStatus === "finished"
+						? "Target Not Found"
+						: "Ready to Run..."}
 				</Badge>
 			</div>
 
@@ -123,16 +160,19 @@ export function SearchingVisualizer({
 				{array.map((item, index) => (
 					<div
 						key={index}
-						className="flex-1 flex flex-col items-center gap-0.5 sm:gap-1 min-w-[25px] sm:min-w[35px] max-w-[50px]"
+						className="flex-1 flex flex-col items-center gap-0.5 sm:gap-1 min-w-[25px] sm:min-w[35px] max-w-[50px] font-black"
 					>
-						<div className="text-[9x] sm:text-xs font-semibold h-4 sm:h-5">
+						<div className="text-[9x] sm:text-xs h-4 sm:h-5 font-black">
 							{item.value}
 						</div>
 						<div
 							className="w-full transition-all duration-300 rounded-t flex items-end justify-center pb-1 sm:pb-2"
 							style={{
 								height:
-									window.innerWidth < 640 ? "200px" : "240px",
+									typeof window !== "undefined" &&
+									window.innerWidth < 640
+										? "200px"
+										: "240px",
 								backgroundColor:
 									item.state === "checking"
 										? "#3b82f6"
@@ -261,6 +301,12 @@ function generateSearchingSteps(
 			break;
 	}
 
+	// Ensure final state is recorded if not found
+	if (steps[steps.length - 1]?.found === undefined) {
+		resetStates();
+		addStep(false, -1);
+	}
+
 	return steps;
 }
 
@@ -319,9 +365,6 @@ function binarySearch(
 			addStep();
 		}
 	}
-
-	resetStates();
-	addStep(false, -1);
 }
 
 function jumpSearch(
@@ -335,22 +378,36 @@ function jumpSearch(
 	let prev = 0;
 
 	// Jump to find the block
-	while (prev < n && arr[Math.min(step, n) - 1].value < target) {
+	while (prev < n && arr[Math.min(prev + step, n) - 1].value < target) {
 		resetStates();
-		const jumpIdx = Math.min(step, n) - 1;
+		const jumpIdx = Math.min(prev + step, n) - 1;
+
+		// Highlight the range being skipped
+		for (let i = prev; i <= jumpIdx; i++) {
+			arr[i].state = "range";
+		}
+
 		arr[jumpIdx].state = "checking";
 		addStep(true);
 
 		if (arr[jumpIdx].value < target) {
 			arr[jumpIdx].state = "notfound";
-			prev = step;
+			prev += step;
 			addStep();
+		} else {
+			prev = jumpIdx;
+			break; // Target is in the current block
 		}
 	}
 
 	// Linear search in the block
 	for (let i = prev; i < Math.min(prev + step, n); i++) {
 		resetStates();
+		// Highlight the block range
+		for (let j = prev; j < Math.min(prev + step, n); j++) {
+			arr[j].state = "range";
+		}
+
 		arr[i].state = "checking";
 		addStep(true);
 
@@ -363,9 +420,6 @@ function jumpSearch(
 			addStep();
 		}
 	}
-
-	resetStates();
-	addStep(false, -1);
 }
 
 function interpolationSearch(
@@ -426,9 +480,6 @@ function interpolationSearch(
 			addStep();
 		}
 	}
-
-	resetStates();
-	addStep(false, -1);
 }
 
 function exponentialSearch(
@@ -450,6 +501,12 @@ function exponentialSearch(
 	let i = 1;
 	while (i < n && arr[i].value <= target) {
 		resetStates();
+
+		// Highlight range check (0 to i)
+		for (let j = 0; j <= i; j++) {
+			arr[j].state = "range";
+		}
+
 		arr[i].state = "checking";
 		addStep(true);
 
@@ -507,9 +564,6 @@ function binarySearchRange(
 			addStep();
 		}
 	}
-
-	resetStates();
-	addStep(false, -1);
 }
 
 function fibonacciSearch(
@@ -536,6 +590,12 @@ function fibonacciSearch(
 		const i = Math.min(offset + fibM2, n - 1);
 
 		resetStates();
+
+		// Highlight current search segment
+		for (let j = offset + 1; j <= Math.min(offset + fibM, n - 1); j++) {
+			arr[j].state = "range";
+		}
+
 		arr[i].state = "checking";
 		addStep(true);
 
@@ -570,7 +630,4 @@ function fibonacciSearch(
 			return;
 		}
 	}
-
-	resetStates();
-	addStep(false, -1);
 }
