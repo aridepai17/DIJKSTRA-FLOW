@@ -91,13 +91,13 @@ export function SortingVisualizer({
 			<div className="flex items-center justify-center gap-3 sm:gap-4 lg:gap-6 flex-wrap">
 				<Badge
 					variant="secondary"
-					className="text-xs sm:text-sm px-3 sm:px-4 py-1.5 sm:py-2"
+					className="text-xs sm:text-sm px-3 sm:px-4 py-1.5 sm:py-2 font-black"
 				>
 					Comparisons: {comparisons}
 				</Badge>
 				<Badge
 					variant="secondary"
-					className="text-xs sm:text-sm px-3 sm:px-4 py-1.5 sm:py-2"
+					className="text-xs sm:text-sm px-3 sm:px-4 py-1.5 sm:py-2 font-black"
 				>
 					Swaps: {swaps}
 				</Badge>
@@ -110,7 +110,7 @@ export function SortingVisualizer({
 						className="flex-1 flex flex-col items-center gap-0.5 sm:gap-1 min-w-[15px] sm:min-w-[20px] max-w-[40px]"
 					>
 						{/* Value label on top */}
-						<div className="text-[8px] sm:text-[10px] font-medium text-foreground/70 h-3 sm:h-4">
+						<div className="text-[8px] sm:text-[10px] font-black text-foreground/70 h-3 sm:h-4">
 							{item.value}
 						</div>
 						{/* Histogram bar */}
@@ -138,7 +138,7 @@ export function SortingVisualizer({
 							}}
 						/>
 						{/* Index label at bottom */}
-						<div className="text-[7px] sm:text-[9px] font-semibold text-muted-foreground h-3 sm:h-4">
+						<div className="text-[7px] sm:text-[9px] font-black text-muted-foreground h-3 sm:h-4">
 							{index}
 						</div>
 					</div>
