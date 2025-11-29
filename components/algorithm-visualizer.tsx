@@ -97,9 +97,9 @@ export function AlgorithmVisualizer({
 		<div className="space-y-4 sm:space-y-6">
 			<div className="flex items-center justify-between">
 				<Button
-					variant="ghost"
+					variant="secondary"
 					onClick={onBack}
-					className="gap-2 -ml-2 sm:ml-3 touch-manipulation"
+					className="gap-2 h-11 px-5 border border-input shadow-2xs hover:bg-accent hover:text-accent-foreground transition-all font-black"
 				>
 					<ArrowLeft className="h-4 w-4" />
 					<span className="hidden sm:inline">Back to Algorithms</span>
@@ -119,7 +119,7 @@ export function AlgorithmVisualizer({
 			</div>
 
 			<div>
-				<h2 className="text-2xl sm:text-3xl font-bold mb-1.5 sm:mb-2 text-balance">
+				<h2 className="text-2xl sm:text-3xl font-black mb-1.5 sm:mb-2 text-balance">
 					{algorithm.name}
 				</h2>
 				<p className="text-sm sm:text-base text-muted-foreground">
@@ -134,11 +134,11 @@ export function AlgorithmVisualizer({
 				<TabsList className="grid w-full max-w-md grid-cols-2 h-10 sm:h-11">
 					<TabsTrigger
 						value="visualization"
-						className="text-sm sm:text-base"
+						className="text-sm sm:text-base font-black"
 					>
 						Visualization
 					</TabsTrigger>
-					<TabsTrigger value="code" className="text-sm sm:text-base">
+					<TabsTrigger value="code" className="text-sm sm:text-base font-black">
 						Code
 					</TabsTrigger>
 				</TabsList>
@@ -163,7 +163,7 @@ export function AlgorithmVisualizer({
 								>
 									<SkipBack className="h-4 w-4" />
 								</Button>
-								<div className="text-xs sm:text-sm font-medium text-muted-foreground min-w-[80px] sm:min-w-[100px] text-center">
+								<div className="text-xs sm:text-sm font-black text-muted-foreground min-w-[80px] sm:min-w-[100px] text-center">
 									Step {currentStep} / {maxSteps}
 								</div>
 								<Button
@@ -193,7 +193,7 @@ export function AlgorithmVisualizer({
 									</Button>
 									<Button
 										onClick={() => setIsPlaying(!isPlaying)}
-										className="gap-2 min-w-[100px] sm:min-w-[110px] h-10 sm:h-11 touch-manipulation text-sm sm:text-base"
+										className="gap-2 min-w-[100px] sm:min-w-[110px] font-black h-10 sm:h-11 touch-manipulation text-sm sm:text-base"
 									>
 										{isPlaying ? (
 											<>
@@ -210,7 +210,7 @@ export function AlgorithmVisualizer({
 								</div>
 
 								<div className="flex-1 flex items-center gap-3 sm:gap-4 min-w-0">
-									<span className="text-xs sm:text-sm font-medium whitespace-nowrap shrink-0">
+									<span className="text-xs sm:text-sm font-black whitespace-nowrap shrink-0">
 										Speed:
 									</span>
 									<Slider
@@ -221,9 +221,9 @@ export function AlgorithmVisualizer({
 										min={1}
 										max={100}
 										step={1}
-										className="flex-1 touch-manipulation"
+										className="flex-1 touch-manipulation font-black"
 									/>
-									<span className="text-xs sm:text-sm font-medium text-muted-foreground w-8 sm:w-10 text-right shrink-0">
+									<span className="text-xs sm:text-sm font-black text-muted-foreground w-8 sm:w-10 text-right shrink-0">
 										{speed}
 									</span>
 								</div>
@@ -232,7 +232,7 @@ export function AlgorithmVisualizer({
 					</Card>
 
 					<Card className="p-4 sm:p-5 lg:p-6">
-						<h3 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3">
+						<h3 className="text-base sm:text-lg font-black mb-2 sm:mb-3">
 							How it works
 						</h3>
 						<p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
