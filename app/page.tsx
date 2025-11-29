@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { AlgorithmSelector } from "@/components/algorithm-selector";
 import { AlgorithmVisualizer } from "@/components/algorithm-visualizer";
-// import { RaceMode } from "@/components/race-mode";
+import { RaceMode } from "@/components/race-mode";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Code2, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -36,7 +36,7 @@ const GridBackground = ({ children }: { children: React.ReactNode }) => {
                 linear-gradient(to bottom, var(--color-muted-foreground) 1px, transparent 1px)
             `,
 				backgroundSize: "40px 40px",
-				opacity: 0.1, // Reduced opacity for subtle dark mode grid
+				opacity: 0.1,
 		  }
 		: {
 				backgroundColor: "#ffffff",
@@ -69,10 +69,7 @@ export default function Home() {
 	return (
 		<GridBackground>
 			<div className="min-h-screen bg-transparent">
-				<header
-					
-					className="sticky top-0 z-50 w-full border-b border-border/40 bg-transparent supports-backdrop-filter]:bg-background/60 backdrop-blur-sm"
-				>
+				<header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/60 backdrop-blur-sm">
 					<div className="container flex h-14 sm:h-16 items-center justify-between px-3 sm:px-4 md:px-6">
 						{/* LEFT SIDE: LOGO & TITLE */}
 						<div className="flex items-center gap-2">
@@ -89,23 +86,15 @@ export default function Home() {
 							</div>
 						</div>
 
-						{/* RIGHT SIDE: CONTROLS (Pushed to the end) */}
+						{/* RIGHT SIDE: CONTROLS */}
 						<div className="flex items-center gap-2">
-							{/* Race Mode Button */}
+							{/* Race Mode Button - Only show if we aren't already deep in a visualizer */}
 							{!selectedAlgorithm && (
 								<Button
 									variant={isRaceMode ? "default" : "outline"}
 									size="sm"
-									onClick={() => {
-										setIsRaceMode(!isRaceMode);
-										if (!isRaceMode)
-											setSelectedAlgorithm({
-												category: "Utility",
-												name: "Race Mode",
-											});
-										else setSelectedAlgorithm(null);
-									}}
-									className="gap-1.5 sm:gap-2 text-xs sm:text-sm h-8 sm:h-9 touch-manipulation"
+									onClick={() => setIsRaceMode(!isRaceMode)} // FIX: Simple toggle, don't touch selectedAlgorithm
+									className="gap-1.5 sm:gap-2 text-xs sm:text-sm h-8 sm:h-9 touch-manipulation font-bold"
 								>
 									<Zap className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
 									<span className="hidden sm:inline font-black">
@@ -122,13 +111,13 @@ export default function Home() {
 				<main className="container px-3 py-6 sm:px-4 sm:py-8 md:px-6 lg:py-10">
 					<div className="mx-auto max-w-7xl">
 						<div className="mb-8 sm:mb-10 lg:mb-12 text-center px-2">
-							<h2 className="mb-3 sm:mb-4 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-balance leading-tight">
+							<h2 className="mb-3 sm:mb-4 text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-balance leading-tight">
 								Visualize Algorithms
 								<span className="block text-primary mt-1">
 									In Real Time
 								</span>
 							</h2>
-							<p className="mx-auto max-w-2xl text-sm sm:text-base lg:text-lg text-muted-foreground text-balance leading-relaxed">
+							<p className="mx-auto max-w-2xl text-sm sm:text-base lg:text-lg text-muted-foreground text-balance leading-relaxed font-black">
 								Learn data structures and algorithms through
 								interactive visualizations. <br />
 								Perfect for students preparing for Computer
@@ -165,7 +154,7 @@ export default function Home() {
 
 				<footer className="mt-12 sm:mt-16 lg:mt-20 border-t border-border/40 py-6 sm:py-8">
 					<div className="container px-3 sm:px-4 md:px-6 text-center text-xs sm:text-sm text-muted-foreground">
-						<p className="leading-relaxed">
+						<p className="leading-relaxed font-black">
 							Built to help students master algorithms • All
 							visualizations run in real-time
 						</p>
