@@ -235,10 +235,17 @@ export function AlgorithmVisualizer({
 						<h3 className="text-base sm:text-lg font-black mb-2 sm:mb-3">
 							How it works
 						</h3>
-						<p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-							{algorithmDescriptions[algorithm.name] ||
-								"Description coming soon."}
-						</p>
+						<div className="text-sm sm:text-base text-muted-foreground leading-relaxed space-y-3">
+							{(algorithmDescriptions[algorithm.name] ||
+								"Description coming soon.")
+								.split("\n\n")
+								.filter((p) => p.trim().length > 0)
+								.map((paragraph, index) => (
+									<p key={index} className="mb-3 last:mb-0">
+										{paragraph.trim()}
+									</p>
+								))}
+						</div>
 					</Card>
 				</TabsContent>
 
