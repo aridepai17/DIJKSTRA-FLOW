@@ -22,19 +22,19 @@ export function CodeSnippets({ algorithm }: CodeSnippetsProps) {
 					<TabsList className="h-11 sm:h-12 bg-transparent">
 						<TabsTrigger
 							value="javascript"
-							className="text-xs sm:text-sm"
+							className="text-xs sm:text-sm font-black"
 						>
 							JavaScript
 						</TabsTrigger>
 						<TabsTrigger
 							value="python"
-							className="text-xs sm:text-sm"
+							className="text-xs sm:text-sm font-black"
 						>
 							Python
 						</TabsTrigger>
 						<TabsTrigger
 							value="java"
-							className="text-xs sm:text-sm"
+							className="text-xs sm:text-sm font-black"
 						>
 							Java
 						</TabsTrigger>
@@ -43,7 +43,7 @@ export function CodeSnippets({ algorithm }: CodeSnippetsProps) {
 
 				<TabsContent value="javascript" className="m-0">
 					<pre className="overflow-x-auto p-4 sm:p-6 text-xs sm:text-sm max-h-[60vh] overflow-y-auto">
-						<code className="font-mono text-foreground">
+						<code className="font-mono font-bold text-foreground">
 							{snippets.javascript}
 						</code>
 					</pre>
@@ -51,7 +51,7 @@ export function CodeSnippets({ algorithm }: CodeSnippetsProps) {
 
 				<TabsContent value="python" className="m-0">
 					<pre className="overflow-x-auto p-4 sm:p-6 text-xs sm:text-sm max-h-[60vh] overflow-y-auto">
-						<code className="font-mono text-foreground">
+						<code className="font-mono font-bold text-foreground">
 							{snippets.python}
 						</code>
 					</pre>
@@ -59,7 +59,7 @@ export function CodeSnippets({ algorithm }: CodeSnippetsProps) {
 
 				<TabsContent value="java" className="m-0">
 					<pre className="overflow-x-auto p-4 sm:p-6 text-xs sm:text-sm max-h-[60vh] overflow-y-auto">
-						<code className="font-mono text-foreground">
+						<code className="font-mono font-bold text-foreground">
 							{snippets.java}
 						</code>
 					</pre>
